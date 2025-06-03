@@ -265,10 +265,10 @@ with tab3:
         col1, col2 = st.columns(2)
         col3, col4 = st.columns(2)
 
-        col1.metric("🎨 Arts", cod["arts"])
-        col2.metric("🌍 Social Sciences", cod["ss"])
-        col3.metric("💻 CST", cod["cst"])
-        col4.metric("🧪 Science", cod["science"])
+        col1.metric("Arts", cod["arts"])
+        col2.metric("Social Sciences", cod["ss"])
+        col3.metric("CST", cod["cst"])
+        col4.metric("Science", cod["science"])
 
        
 
@@ -301,10 +301,10 @@ with tab3:
         # Available CODs by Stream
         st.markdown("### 📚 Remaining COD Courses by Stream")
         stream_map = {
-            "🎨 Arts": arts_st,
-            "🌍 Social Sciences": ss_st,
-            "💻 CST": cst_st,
-            "🧪 Science": science_st
+            "Arts": arts_st,
+            "Social Sciences": ss_st,
+            "CST": cst_st,
+            "Science": science_st
         }
 
         for stream_label, course_set in stream_map.items():
@@ -493,7 +493,7 @@ with tab5:
 
     cod_streams = {
         "Arts": arts_st,
-        "SS": ss_st,
+        "Social Science": ss_st,
         "CST": cst_st,
         "Science": science_st
     }
