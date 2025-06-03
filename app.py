@@ -50,13 +50,14 @@ if pdf and not st.session_state.uploaded:
     st.success("Transcript processed.")
 
 # --- Tabs ---
-tab1, tab2, tab3, tab4, tab5= st.tabs([
+tab1, tab2, tab3, tab4, tab5 = st.tabs([
     "Courses & Retake", 
     "CGPA Planner", 
     "COD Planner",
     "Visual Analytics",
     "Unlocked Courses"
 ])
+
 
 # -- Initialization --
 if "added_courses" not in st.session_state:

@@ -206,16 +206,18 @@ def cgpa_projection(target_cgpa=None):
     earned_credits = sum(node.credit for node in courses_done.values())
     earned_points = sum(node.gpa * node.credit for node in courses_done.values())
 
-    remaining_credits = total_required_credits - earned_credits
+    remaining_credits = max(total_required_credits - earned_credits, 0)
+    total_credits = earned_credits + remaining_credits
+
     max_possible_points = earned_points + (remaining_credits * 4.0)
-    max_possible_cgpa = round(max_possible_points / total_required_credits, 2) if total_required_credits else 0.0
+    max_possible_cgpa = round(max_possible_points / total_credits, 2) if total_credits else 0.0
 
     result = {"max_cgpa": max_possible_cgpa}
 
     if target_cgpa is not None:
-        required_total_points = target_cgpa * total_required_credits
+        required_total_points = target_cgpa * total_credits
         needed_points = required_total_points - earned_points
-        
+
         if remaining_credits <= 0:
             result["message"] = "All credits completed. Cannot improve CGPA further."
         elif max_possible_cgpa < target_cgpa:
@@ -232,18 +234,14 @@ def cgpa_planner(target_cgpa=None, semesters=0, courses_per_sem=0):
     total_credits_done = sum(course.credit for course in courses_done.values())
     quality_points_done = sum(course.gpa * course.credit for course in courses_done.values())
 
-    remaining_credits = 136 - total_credits_done
-    done = "CSE400" in courses_done
-
-    if done:
-        remaining_courses = remaining_credits / 3
-    else:
-        remaining_courses = ((remaining_credits - 4) / 3) + 1 if remaining_credits > 4 else 1
+    total_required_credits = 136
+    remaining_credits = total_required_credits - total_credits_done
 
     planned_courses = semesters * courses_per_sem
-    planned_courses = min(planned_courses, remaining_courses)
+    max_possible_courses = (remaining_credits + 2) // 3  # rounding up
+    planned_courses = min(planned_courses, max_possible_courses)
+    planned_credits = min(planned_courses * 3, remaining_credits)
 
-    planned_credits = planned_courses * 3  # Assuming 3 credits per course
     total_quality_points = quality_points_done + (planned_credits * 4.0)
     total_credits = total_credits_done + planned_credits
 
@@ -251,19 +249,21 @@ def cgpa_planner(target_cgpa=None, semesters=0, courses_per_sem=0):
     result = {"max_cgpa": max_possible_cgpa}
 
     if target_cgpa is not None:
-        if planned_courses == 0 or planned_credits == 0:
-            result["message"] = "No planned courses. Cannot calculate required average GPA."
-        else:
-            total_required_points = target_cgpa * total_credits
-            needed_points = total_required_points - quality_points_done
-            raw_required_avg_gpa = needed_points / planned_credits
+        total_required_points = target_cgpa * total_credits
+        needed_points = total_required_points - quality_points_done
 
-            if raw_required_avg_gpa > 4.0:
-                result["required_avg_gpa"] = round(raw_required_avg_gpa, 2)
-                result["message"] = f"To reach a CGPA of {target_cgpa}, you'd need to average {round(raw_required_avg_gpa, 2)} GPA—which is not possible."
+        if planned_credits <= 0:
+            result["message"] = "No valid credits planned. Cannot calculate required GPA."
+        else:
+            required_avg_gpa = needed_points / planned_credits
+            required_avg_gpa = round(required_avg_gpa, 2)
+
+            if required_avg_gpa > 4.0:
+                result["required_avg_gpa"] = required_avg_gpa
+                result["message"] = f"Target CGPA of {target_cgpa} is not achievable with current plan. Required GPA: {required_avg_gpa}."
             else:
-                result["required_avg_gpa"] = round(raw_required_avg_gpa, 2)
-                result["message"] = f"To reach a CGPA of {target_cgpa}, you need to average at least {round(raw_required_avg_gpa, 2)} GPA in the next {int(planned_courses)} courses."
+                result["required_avg_gpa"] = required_avg_gpa
+                result["message"] = f"To reach CGPA {target_cgpa}, you must average {required_avg_gpa} GPA in the next {planned_courses} courses ({planned_credits} credits)."
 
     return result
 
