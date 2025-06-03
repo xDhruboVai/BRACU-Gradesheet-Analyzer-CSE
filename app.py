@@ -346,7 +346,12 @@ with tab4:
 
     # === GPA & CGPA Trend Line Chart ===
     st.subheader("📈 GPA & CGPA Trend")
-    st.markdown("*Feel free to zoom in recklessly — double tap will always bring you back to sanity.*")
+    st.markdown("""
+        ** Double-click** to reset the graph view.  
+        ** Hover over GPA points** to see which course deviated the most from the average.  
+        *Zoom in as much as you like — a quick double-click will always bring you back to sanity.*
+        """)
+
 
 
     def semester_sort_key(sem_str):
