@@ -349,6 +349,8 @@ with tab4:
 
     # === GPA & CGPA Trend Line Chart ===
     st.subheader("📈 GPA & CGPA Trend")
+    st.markdown("*Feel free to zoom in recklessly — double tap will always bring you back to sanity.*")
+
 
     def semester_sort_key(sem_str):
         if sem_str == "VIRTUAL SEMESTER":
@@ -489,7 +491,7 @@ with tab5:
 
     # COD Courses by Stream
     st.markdown("---")
-    st.subheader("🎯 Unlocked COD Courses by Stream")
+    st.subheader("COD Courses by Stream (Check COD planner to understand which stream to prioritize)")
 
     cod_streams = {
         "Arts": arts_st,
