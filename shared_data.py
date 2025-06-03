@@ -30,10 +30,6 @@ preq = {
 
     # Optional
     "CHE101": [], "BIO101": [], "ENV103": [],
-
-    # Other general education
-    "HUM101": [], "HUM102": [], "HST102": [], "HST104": [], "HUM207": [],
-    "ENG113": [], "ENG114": [], "ENG115": [], "ENG333": []
 }
 
 
@@ -57,9 +53,12 @@ grades = ["A+", "A", "A-", "B+", "B", "B-", "C+", "C", "C-", "D+", "D", "F", "W"
 core = {
     "CSE110", "CSE111", "CSE220", "CSE221", "CSE230", "CSE250", "CSE251", "CSE260",
     "CSE320", "CSE321", "CSE330", "CSE331", "CSE340", "CSE341", "CSE350", "CSE360",
-    "CSE370", "CSE420", "CSE421", "CSE422", "CSE423", "CSE460", "CSE461", "CSE470", "CSE471"
+    "CSE370", "CSE420", "CSE421", "CSE422", "CSE423", "CSE460", "CSE461", "CSE470", "CSE471",
 }
 
 labs = {"CSE110", "CSE111", "CSE220", "CSE221", "CSE230", "CSE250", "CSE251", "CSE260",
     "CSE321", "CSE330", "CSE341", "CSE350", "CSE360",
     "CSE370", "CSE420", "CSE421", "CSE422", "CSE423", "CSE460", "CSE461", "CSE471", "PHY111", "PHY112", "MAT120"}
+
+comp_cod = {"PHY111", "PHY112", "ENG101", "ENG102", "MAT110", "MAT120", "MAT215", "MAT216", "STA201", "HUM103", "BNG103", "EMB101"}
+tarc = {"HUM103", "BNG103", "EMB101", "ENG102"}

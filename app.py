@@ -8,7 +8,7 @@ from utils_parser import (
     get_unlocked_courses
 )
 from shared_data import (
-    preq, arts_st, cst_st, core, science_st, ss_st, labs
+    preq, arts_st, cst_st, core, science_st, ss_st, labs, comp_cod, tarc
 )
 
 # Page config
@@ -21,17 +21,26 @@ st.set_page_config(
 
 # Theme and header
 st.title("📊 BRACU Gradesheet Analyzer")
-st.markdown("Analyze your BRAC University transcript, calculate CGPA, visualize trends and plan courses.")
+st.markdown("Analyze your BRAC University Gradesheet, calculate CGPA, visualize trends and plan courses.")
 
 # CSS for dark theme
-st.markdown("""
+st.markdown(
+    """
     <style>
-    .stApp {
+    body {
         background-color: #000000;
         color: white;
     }
+    .stApp {
+        background-color: #000000;
+    }
+    .css-18e3th9, .css-1d391kg {
+        background-color: #000000;
+    }
     </style>
-""", unsafe_allow_html=True)
+    """,
+    unsafe_allow_html=True
+)
 
 # Session state setup
 if "name" not in st.session_state:
@@ -46,20 +55,26 @@ if "name" not in st.session_state:
     st.session_state.semesters_done = {}
 
 # Upload transcript
-st.sidebar.title("Transcript Upload")
-pdf = st.sidebar.file_uploader("Upload your transcript", type="pdf")
+st.sidebar.title("Gradesheet Upload")
 
-if pdf and not st.session_state.uploaded:
-    with open("temp.pdf", "wb") as f:
-        f.write(pdf.read())
-    name, sid, c_done, s_done = extract("temp.pdf")
-    st.session_state.name = name
-    st.session_state.id = sid
-    st.session_state.uploaded = True
-    st.session_state.courses_done = c_done
-    st.session_state.semesters_done = s_done
-    st.session_state.original_gpas = {c: n.gpa for c, n in c_done.items()}
-    st.success("Transcript processed.")
+if not st.session_state.uploaded:
+    pdf = st.sidebar.file_uploader("Upload your Gradesheet", type="pdf")
+
+    if pdf:
+        with open("temp.pdf", "wb") as f:
+            f.write(pdf.read())
+        name, sid, c_done, s_done = extract("temp.pdf")
+        st.session_state.name = name
+        st.session_state.id = sid
+        st.session_state.uploaded = True
+        st.session_state.courses_done = c_done
+        st.session_state.semesters_done = s_done
+        st.session_state.original_gpas = {c: n.gpa for c, n in c_done.items()}
+        st.success("Transcript processed.")
+else:
+    st.sidebar.write("Gradesheet uploaded! Refresh page to upload another." \
+    " You can close this sidebar.")
+
 
 # Tabs
 tab1, tab2, tab3, tab4, tab5 = st.tabs([
@@ -85,6 +100,33 @@ if "cgpa" not in st.session_state:
 # ========== TAB 1 ==========
 with tab1:
     st.header("Student & Academic Info")
+    st.markdown(
+    """
+    <div style="
+        border: 1px solid #dcdcdc;
+        border-radius: 10px;
+        padding: 15px 20px;
+        background-color: #00000;
+        box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.05);
+        margin-bottom: 20px;
+        font-size: 14px;
+        line-height: 1.5;
+    ">
+        <strong>ℹ️ Note: Read this before proceeding</strong><br><br>
+        Press the <strong>REFRESH INFO BUTTON (ON THE RIGHT)</strong> upon adding the gradesheet, adding or removing any course.<br>
+        Any change made on this page will be treated as a course addition and will affect:
+        <ul style="margin-top: 5px; margin-bottom: 5px;">
+            <li>CGPA planner</li>
+            <li>CGPA projection</li>
+            <li>Graphs</li>
+            <li>Unlocked courses</li>
+        </ul>
+        To remove added or retake courses, use the <strong>REMOVE COURSE</strong> section.
+    </div>
+    """,
+    unsafe_allow_html=True,
+)
+
 
     col1, col2, col3 = st.columns([3, 3, 1])
     blur = col1.checkbox("Blur personal info")
@@ -162,11 +204,12 @@ with tab1:
             st.success(f"Removed: {', '.join(selected_remove)}")
 
     else:
-        st.info("Upload a transcript to begin.")
+        st.info("Upload a Gradesheet to begin.")
 
 # ========== TAB 2 ==========
 with tab2:
     st.header("📊 CGPA Planner & Projection")
+
     with st.form("cgpa_planner_form"):
         col1, col2 = st.columns(2)
         target_cgpa = col1.number_input("🎯 Target CGPA", min_value=0.0, max_value=4.0, step=0.01)
@@ -175,12 +218,22 @@ with tab2:
         submitted = st.form_submit_button("📈 Run CGPA Planner")
 
         if submitted:
-            result = cgpa_planner(st.session_state.courses_done, target_cgpa, semesters, courses_per_sem)
-            st.metric("Max Possible CGPA", result.get("max_cgpa", 0.0))
-            if "required_avg_gpa" in result:
-                st.metric("Required Avg GPA", result["required_avg_gpa"])
-            if "message" in result:
-                st.info(result["message"])
+            if semesters == 0 or courses_per_sem == 0:
+                st.warning("Please enter both future semesters and courses per semester to plan ahead.")
+
+                # Show current CGPA
+                done_courses = st.session_state.courses_done
+                total_credits = sum(c.credit for c in done_courses.values())
+                total_points = sum(c.gpa * c.credit for c in done_courses.values())
+                current_cgpa = round(total_points / total_credits, 2) if total_credits else 0.0
+                st.metric("Current CGPA", current_cgpa)
+            else:
+                result = cgpa_planner(st.session_state.courses_done, target_cgpa, semesters, courses_per_sem)
+                st.metric("Max Possible CGPA", result.get("max_cgpa", 0.0))
+                if "required_avg_gpa" in result:
+                    st.metric("Required Avg GPA", result["required_avg_gpa"])
+                if "message" in result:
+                    st.info(result["message"])
 
     st.markdown("---")
     st.subheader("🔍 Max CGPA Projection")
@@ -264,6 +317,11 @@ with tab4:
 
     # GPA trend
     st.subheader("📈 GPA & CGPA Trend")
+    st.markdown("""
+        ***Double-click*** to reset the graph view.  
+        **Hover over GPA points** to see which course deviated the most from the average.  
+        *Zoom in as much as you like — a quick double-click will always bring you back to sanity.*
+        """)
 
     def semester_sort_key(sem_str):
         if sem_str == "VIRTUAL SEMESTER":
@@ -294,21 +352,68 @@ with tab4:
         top_courses.append(max_deviation_course)
 
     if semesters:
+        semesters_list, gpas, cgpas, most_off_track = [], [], [], []
+
+        for sem in sorted_semesters:
+            node = filtered_semesters[sem]
+            if not node.courses:
+                continue
+
+            avg_gpa = node.gpa
+            # Find the course with the lowest GPA (worst performing)
+            lowest_course = min(node.courses, key=lambda c: c.gpa)
+            lowest_course_str = f"{lowest_course.course} ({lowest_course.gpa:.2f})"
+
+            semesters_list.append(sem)
+            gpas.append(node.gpa)
+            cgpas.append(node.cgpa)
+            most_off_track.append(lowest_course_str)
+
+        # Create DataFrame with all lists having the same length
         df = pd.DataFrame({
-            "Semester": semesters,
+            "Semester": semesters_list,
             "GPA": gpas,
             "CGPA": cgpas,
-            "Top Deviant Course": top_courses
+            "Most Off-Track Course": most_off_track
         })
 
-        fig_gpa = px.line(df, x="Semester", y="GPA", markers=True, title="GPA Trend Over Semesters")
-        fig_cgpa = px.line(df, x="Semester", y="CGPA", markers=True, title="CGPA Trend Over Semesters")
+        # GPA Trend plot with hover showing worst course info
+        fig_gpa = px.line(
+            df,
+            x="Semester",
+            y="GPA",
+            markers=True,
+            title="GPA Trend Over Semesters",
+            hover_data={
+                "Semester": False,  # x-axis already shows this
+                "GPA": True,
+                "Most Off-Track Course": True,
+            }
+        )
+        fig_gpa.update_layout(
+            yaxis=dict(range=[0, 4]),
+            template="plotly_white",
+            hoverlabel=dict(bgcolor="black", font_size=14, font_family="Arial")
+        )
 
-        fig_gpa.update_layout(yaxis=dict(range=[0, 4]), template="plotly_white")
-        fig_cgpa.update_layout(yaxis=dict(range=[0, 4]), template="plotly_white")
+        # CGPA Trend plot
+        fig_cgpa = px.line(
+            df,
+            x="Semester",
+            y="CGPA",
+            markers=True,
+            title="CGPA Trend Over Semesters"
+        )
+        fig_cgpa.update_layout(
+            yaxis=dict(range=[0, 4]),
+            template="plotly_white"
+        )
 
+        # Show both charts
         st.plotly_chart(fig_gpa, use_container_width=True)
         st.plotly_chart(fig_cgpa, use_container_width=True)
+
+
 
 # ========== TAB 5 ==========
 with tab5:
@@ -316,23 +421,34 @@ with tab5:
 
     unlocked, unlocks_by = get_unlocked_courses(st.session_state.courses_done)
 
-    st.subheader("✅ Unlocked Core Courses")
-    core_unlocked = sorted([c for c in unlocked if c in core])
-    for course in core_unlocked:
-        unlocked_list = unlocks_by.get(course, [])
-        st.write(f"• {course}  ⇒  unlocks: {', '.join(unlocked_list) if unlocked_list else 'None'}")
+    # Create two columns: left for core, right for compulsory COD
+    col1, col2 = st.columns(2)
+
+    # --- LEFT COLUMN: Unlocked Core Courses ---
+    with col1:
+        st.subheader("✅ Unlocked Core Courses")
+        core_unlocked = sorted([c for c in unlocked if c in core])
+        for course in core_unlocked:
+            unlocked_list = unlocks_by.get(course, [])
+            st.write(f"• {course}  ⇒  unlocks: {', '.join(unlocked_list) if unlocked_list else 'None'}")
+
+    # --- RIGHT COLUMN: Unlocked Compulsory COD Courses ---
+    with col2:
+        st.subheader("📘 Unlocked Compulsory COD Courses")
+        # comp_cod should already be defined
+        # tarc should also be defined, e.g.: tarc = {"EMB101", "HUM103"}
+        comp_cod_unlocked = sorted([
+            c for c in unlocked
+            if c in comp_cod and c not in st.session_state.courses_done
+        ])
+        if comp_cod_unlocked:
+            st.write("The following compulsory COD courses are now unlocked:")
+            for course in comp_cod_unlocked:
+                note = " _(Suggested to complete at TARC)_" if course in tarc else ""
+                st.write(f"• {course}{note}")
+        else:
+            st.write("No compulsory COD courses are left.")
 
     st.markdown("---")
-    st.subheader("COD Courses by Stream")
-
-    cod_streams = {
-        "Arts": arts_st,
-        "Social Science": ss_st,
-        "CST": cst_st,
-        "Science": science_st
-    }
-
-    for stream, course_set in cod_streams.items():
-        available = sorted([c for c in unlocked if c in course_set])
-        with st.expander(f"{stream} ({len(available)} available)"):
-            st.write(", ".join(available) if available else "No courses unlocked yet.")
+    st.markdown("In order to check which COD course you should take, please check the COD Planner")
+         
