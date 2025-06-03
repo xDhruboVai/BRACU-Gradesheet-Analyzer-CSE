@@ -1,0 +1,2 @@
+streamlit
+PyMuPDF == 1.23.7
