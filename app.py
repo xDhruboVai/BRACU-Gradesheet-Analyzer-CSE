@@ -12,14 +12,35 @@ from shared_data import(
 )
 
 # --- UI Setup ---
-st.markdown("""
-    <meta name="description" content="BRACU Gradesheet Analyzer helps BRAC University students track CGPA, retakes, and unlock courses based on prerequisites. Plan your academic future easily!">
-    <meta name="keywords" content="BRACU, CGPA Planner, Gradesheet Analyzer, BRAC University, Transcript Visualizer, Academic Dashboard">
-""", unsafe_allow_html=True)
-st.set_page_config(page_title="BRACU Gradesheet Analyzer", page_icon="📊", layout="wide")
+st.set_page_config(
+    page_title="BRACU Gradesheet Analyzer",
+    page_icon="📊",
+    layout="wide",
+    initial_sidebar_state="expanded"
+)
 st.title("📊 BRACU Gradesheet Analyzer")
-st.markdown("Analyze your transcript, plan your CGPA, and unlock course recommendations.")
+st.markdown("Analyze your BRAC University transcript, calculate CGPA, visualize trends and plan courses.")
 
+st.markdown(
+    """
+    <style>
+    body {
+        background-color: #000000;
+        color: white;
+    }
+    .stApp {
+        background-color: #000000;
+    }
+    .css-18e3th9, .css-1d391kg {
+        background-color: #000000;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
+# Page header and notes
+st.header("Student & Academic Info")
 
 st.markdown("""
     <style>
@@ -79,6 +100,21 @@ if "regrades" not in st.session_state:
 # ========== TAB 1 ==========
 with tab1:
     st.header("Student & Academic Info")
+
+    st.markdown(
+        """
+        **ℹ️ Note:**  
+        Press the refresh button upon adding or removing any course.  
+        Any change made on this page will be treated as a course addition and will affect:
+        - CGPA planner
+        - CGPA projection
+        - Graphs
+        - Unlocked courses  
+
+        To remove added or retake courses, use the **Remove Course** button.
+        """
+    )
+
     col1, col2, col3 = st.columns([3, 3, 1])
 
     blur = col1.checkbox("Blur personal info")
