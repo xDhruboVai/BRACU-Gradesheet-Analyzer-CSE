@@ -12,7 +12,14 @@ from shared_data import(
 )
 
 # --- UI Setup ---
-st.set_page_config(page_title="Academic Dashboard", layout="wide")
+st.markdown("""
+    <meta name="description" content="BRACU Gradesheet Analyzer helps BRAC University students track CGPA, retakes, and unlock courses based on prerequisites. Plan your academic future easily!">
+    <meta name="keywords" content="BRACU, CGPA Planner, Gradesheet Analyzer, BRAC University, Transcript Visualizer, Academic Dashboard">
+""", unsafe_allow_html=True)
+st.set_page_config(page_title="BRACU Gradesheet Analyzer", page_icon="📊", layout="wide")
+st.title("📊 BRACU Gradesheet Analyzer")
+st.markdown("Analyze your transcript, plan your CGPA, and unlock course recommendations.")
+
 
 st.markdown("""
     <style>
