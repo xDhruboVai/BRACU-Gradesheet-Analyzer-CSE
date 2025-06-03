@@ -192,24 +192,21 @@ with tab1:
             for course in selected_remove:
                 # If it was a retake, restore the original GPA
                 if course in st.session_state.retakes:
-                    # Step 1: Remove retake (virtual semester entry)
                     remove_course(course)
                     
-                    # Step 2: Restore original GPA
                     original_gpa = st.session_state.original_gpas.get(course)
                     if original_gpa is not None:
                         original_credit = 4 if course == "CSE400" else 3
                         courses_done[course] = course_node(course, gpa=original_gpa)
                         courses_done[course].credit = original_credit
 
-                    # Cleanup state
                     st.session_state.retakes.pop(course, None)
                     st.session_state.regrades.pop(course, None)
 
                 elif course in st.session_state.added_courses:
                     st.session_state.added_courses.remove(course)
                     st.session_state.original_gpas.pop(course, None)
-                    remove_course(course)  # Remove the course completely
+                    remove_course(course)
             refresh_info()
             st.success(f"Removed: {', '.join(selected_remove)}")
 
@@ -258,7 +255,7 @@ with tab3:
         cod = cod_planner()
         taken_courses = set(courses_done.keys())
 
-        # Summary Overview - Clean 2x2 Grid
+        # Summary Overview - 2x2 Grid
         st.markdown("**Total CODs Completed:**")
         st.metric(label="", value=f"{cod['total_taken']} / 5")
         st.markdown("### 📊 Current COD Status")
@@ -468,7 +465,6 @@ with tab5:
             if all(p in completed for p in prereqs):
                 unlocked_now.add(course)
 
-        # Also: Add all COD courses not in prereq_map and not done
         cod_pool = cst_st | ss_st | arts_st | science_st
         for course in cod_pool:
             if course not in prereq_map and course not in completed:

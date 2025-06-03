@@ -1,12 +1,6 @@
 import fitz
 from shared_data import preq, cst_st, arts_st, ss_st, science_st, to_remove, grades, core
 
-# Paste your original classes and functions here exactly as you gave me.
-# To avoid redundancy, I'm going to import your entire original code here.
-# But since you asked to create util_parser.py, I will just put the relevant functions/classes in this file.
-
-# Copy your full code here (Course_node, Semester_node, extract, add_course, etc.)
-
 class course_node:
     def __init__(self, course, gpa = 0.0 , grade = "F", credit = 3):
         self.course = course
@@ -134,7 +128,7 @@ def cgpa_upto_null():
     semesters_done["NULL"].cgpa = round(total_points / total_credits, 2) if total_credits else 0.0
 
 def add_course(course, gpa_val):
-    semester = "VIRTUAL SEMESTER"  # instead of "NULL"
+    semester = "VIRTUAL SEMESTER"
 
     credit = 4 if course == "CSE400" else 3
 
