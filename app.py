@@ -104,7 +104,7 @@ with tab1:
     st.markdown(
         """
         **ℹ️ Note:**  
-        Press the refresh button upon adding or removing any course.  
+        Press the refresh button upon adding the gradesheet, adding or removing any course.  
         Any change made on this page will be treated as a course addition and will affect:
         - CGPA planner
         - CGPA projection
