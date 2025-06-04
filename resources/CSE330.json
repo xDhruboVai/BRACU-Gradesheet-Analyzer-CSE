@@ -1,0 +1,17 @@
+{
+  "title": "CSE330",
+  "description": "No description provided.",
+  "resources": [{
+      "name": "Resource part 1",
+      "link": "https://docs.google.com/document/d/1iBB0qw32X-3nGlKcYcpWWIX0X0gQtUf4DEGzCzC9CLs/edit?fbclid=IwY2xjawIeXsFleHRuA2FlbQIxMAABHV-VHpSJ7_vlUR9gMzzAXUqnf3gCtpKxikVHk86WZmZyYMxeJXSom8HxKA_aem_UDR55Bp3Et090DCZmAFYyQ&tab=t.0",
+      "type": "folder"
+    },{
+      "name": "Resource part 2",
+      "link": "https://docs.google.com/document/d/1Etnt2GUvRwcjQG1m0yZUozbjv488pCtuizeOM3KqIIQ/edit?fbclid=IwY2xjawIeXrxleHRuA2FlbQIxMAABHWFQO6yrLtKN62-S_WII_fsfQTZYMZAZuZpCZnqdrbWXt82v0pEzZ_pI9A_aem_BfyLrpLc4bYWz6FLsJdwAw&tab=t.0",
+      "type": "folder"
+    }],
+  "previous_questions": {
+    "mid": "",
+    "final": ""
+  }
+}

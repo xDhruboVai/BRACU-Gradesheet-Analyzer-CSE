@@ -1,0 +1,20 @@
+{
+  "title": "CSE111",
+  "description": "No description provided.",
+  "resources": [
+    {
+      "name": "Python Playlist",
+      "link": "https://www.youtube.com/playlist?list=PLvr0Ht-XkB_3NAwjutgaG0-62d2yjG6qz",
+      "type": "link"
+    },
+    {
+      "name": "Java Playlist",
+      "link": "https://youtube.com/playlist?list=PLvr0Ht-XkB_3QPWYBje6NqEs3QLj_0vpf&si=56SRxKOHelJEcHIb",
+      "type": "link"
+    }
+  ],
+  "previous_questions": {
+    "mid": "",
+    "final": ""
+  }
+}

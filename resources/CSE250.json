@@ -1,0 +1,30 @@
+{
+  "title": "CSE250",
+  "description": "No description provided.",
+  "resources": [
+    {
+      "name": "Lecture Slides",
+      "link": "https://drive.google.com/drive/folders/1InXQaFzcpopkLLxTPJhtPY7c_D0XD7-J",
+      "type": "folder"
+    },
+    {
+      "name": "Practice Problems",
+      "link": "https://drive.google.com/drive/folders/1Lyd9vesm1yTCy1_0CzrmSUWEwjygVmYK",
+      "type": "folder"
+    },
+    {
+      "name": "YouTube Playlist",
+      "link": "https://youtube.com/playlist?list=PLaGWhzUB5BBslAOakUL8ETnMpZntxE-UV&si=EBlKlMi0s1xu1pMZ",
+      "type": "link"
+    },
+    {
+      "name": "Lab Sheets",
+      "link": "https://drive.google.com/drive/folders/1vS5r47VJLmh8RJNey37f2RXB6fUrHkm9?usp=sharing",
+      "type": "folder"
+    }
+  ],
+  "previous_questions": {
+    "mid": "",
+    "final": ""
+  }
+}

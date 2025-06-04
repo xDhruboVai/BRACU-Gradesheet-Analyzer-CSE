@@ -1,0 +1,25 @@
+{
+  "title": "CSE110",
+  "description": "No description provided.",
+  "resources": [
+    {
+      "name": "Java Playlist TAW sir",
+      "link": "https://youtube.com/playlist?list=PLvr0Ht-XkB_0KC2-N3hv0V3ib-Z6wKkAy&si=9bwlmFEpyofPLCQR ",
+      "type": "link"
+    },
+    {
+      "name": "Java Playlist MSI sir",
+      "link": "https://www.youtube.com/playlist?list=PLr9he3UyIy3m2NRgvzXIB3yp0LMvEWktj",
+      "type": "link"
+    },
+    {
+      "name": "Python Playlist TAW sir",
+      "link": "https://youtube.com/playlist?list=PLvr0Ht-XkB_0V-mjAYlfgk-3VRmFarlzC",
+      "type": "link"
+    }
+  ],
+  "previous_questions": {
+    "mid": "",
+    "final": ""
+  }
+}

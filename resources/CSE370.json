@@ -1,0 +1,17 @@
+{
+  "title": "CSE370",
+  "description": "No description provided.",
+  "resources": [{
+    "name": "Lecture slides",
+    "link": "https://drive.google.com/drive/folders/1FkgbFZRvWS08QFs-BEePPkQh0O8n7Um2", 
+    "type": "folder"
+  },{
+    "name": "Practice Sheets",
+    "link": "https://drive.google.com/drive/folders/1IJET35EOzg30wfXER9zllV9O7g3antAU", 
+    "type": "folder"
+  }],
+  "previous_questions": {
+    "mid": "",
+    "final": "https://drive.google.com/drive/folders/1h__RHPuWDTHcghiKCx6AQSNnr6n2jei9?usp=sharing"
+  }
+}

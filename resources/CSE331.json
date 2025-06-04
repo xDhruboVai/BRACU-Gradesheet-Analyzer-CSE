@@ -1,0 +1,17 @@
+{
+  "title": "CSE331",
+  "description": "No description provided.",
+  "resources": [{
+      "name": "Playlist",
+      "link": "https://youtube.com/playlist?list=PLBENQsMXh3gz85EJ3ZCSa9l9hnUiOer-H&si=7G_OFlEia8Mlm-7h",
+      "type": "link"
+    },{
+      "name": "Hand Note",
+      "link": "https://drive.google.com/file/d/1DZtAetQGHeTZGUM1QIEqZGQ9SRoUDIx4/view?fbclid=IwY2xjawKgQOVleHRuA2FlbQIxMABicmlkETF1akNZWWtjMmMwQVYwcEZ0AR7JKVke2EL_J02tK1wCZMNgjJOHJTUY7f1X5yzNQeuEbGL6iLseV_xMAQ4zEQ_aem_Lnstb0Pyjh6cjjxf-WTpPA",
+      "type": "folder"
+    }],
+  "previous_questions": {
+    "mid": "https://drive.google.com/drive/folders/1qq24OO39tbwgd6nSucdW_2duTsszyth1",
+    "final": "https://drive.google.com/drive/folders/12BheG46xp7QaqEaFWg3MVD1VxMlsZyj-?fbclid=IwY2xjawKgQZhleHRuA2FlbQIxMABicmlkETF1akNZWWtjMmMwQVYwcEZ0AR7nT5JhIqEWELrkrP4DaqmZG1JjnOCtNnHpLmutbknpcozFpigG-_bFdq06RA_aem_L9wcWSurxA-4waeg-PBl_w"
+  }
+}

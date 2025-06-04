@@ -1,0 +1,13 @@
+{
+  "title": "CSE260",
+  "description": "No description provided.",
+  "resources": [{
+      "name": "Playlist",
+      "link": "https://www.youtube.com/playlist?app=desktop&list=PLzzYtJMBTYCcVH56uHLz0f7eJI0JNAEyQ",
+      "type": "link"
+    }],
+  "previous_questions": {
+    "mid": "",
+    "final": ""
+  }
+}

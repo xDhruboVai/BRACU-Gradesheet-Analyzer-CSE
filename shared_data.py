@@ -23,11 +23,6 @@ preq = {
     "ECO101": [], "ECO102": [], "ECO105": [], "BUS102": [], "POL102": [],
     "DEV104": [], "POL201": [], "SOC201/ANT202": [], "ANT342": [], "ANT351": [], "BUS333": [],
 
-    # Cannot be taken now
-    "ACT201": [], "ACT202": [], "BUS101": [], "BUS202": [], "BCH101": [],
-    "BTE101": [], "CHE110": [], "CHN101": [], "FRN101": [], "FIN301": [],
-    "GEO101": [], "LAW101": [], "HUM111": [], "STA301": [],
-
     # Optional
     "CHE101": [], "BIO101": [], "ENV103": [],
 }
@@ -58,7 +53,7 @@ core = {
 
 labs = {"CSE110", "CSE111", "CSE220", "CSE221", "CSE230", "CSE250", "CSE251", "CSE260",
     "CSE321", "CSE330", "CSE341", "CSE350", "CSE360",
-    "CSE370", "CSE420", "CSE421", "CSE422", "CSE423", "CSE460", "CSE461", "CSE471", "PHY111", "PHY112", "MAT120"}
+   "CSE370", "CSE420", "CSE421", "CSE422", "CSE423", "CSE460", "CSE461", "CSE471", "PHY111", "PHY112", "MAT120"}
 
 comp_cod = {"PHY111", "PHY112", "ENG101", "ENG102", "MAT110", "MAT120", "MAT215", "MAT216", "STA201", "HUM103", "BNG103", "EMB101"}
 tarc = {"HUM103", "BNG103", "EMB101", "ENG102"}

@@ -1,0 +1,18 @@
+{
+  "title": "CSE230",
+  "description": "No description provided.",
+  "resources": [{
+      "name": "Playlist",
+      "link": "https://www.youtube.com/@farhanferoz8226/playlists?app=desktop",
+      "type": "link"
+    },
+    {
+      "name": "Resource Folder",
+      "link": "https://drive.google.com/drive/folders/168njBvRnGkJNXFz9rzTJsBVJCQExgHck",
+      "type": "folder"
+    }],
+  "previous_questions": {
+    "mid": "",
+    "final": ""
+  }
+}

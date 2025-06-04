@@ -1,5 +1,7 @@
+import os
+import json
 import fitz
-from shared_data import preq, cst_st, arts_st, ss_st, science_st, to_remove, grades, core
+from shared_data import preq, cst_st, arts_st, ss_st, science_st, to_remove, grades, core, comp_cod, tarc
 
 class course_node:
     def __init__(self, course, gpa=0.0, grade="F", credit=3):
@@ -356,3 +358,28 @@ def get_unlocked_courses(courses_done):
             unlocked_now.add(course)
 
     return unlocked_now, reverse_unlock_map
+
+def get_all_course_codes():
+    all_codes = set(preq.keys())
+    for lst in preq.values():
+        all_codes.update(lst)
+
+    all_codes.update(science_st)
+    all_codes.update(arts_st)
+    all_codes.update(cst_st)
+    all_codes.update(ss_st)
+    all_codes.update(comp_cod)
+    all_codes.update(core)
+    all_codes.update(tarc)
+
+    all_codes.difference_update(to_remove)
+
+    return sorted(all_codes)
+
+def load_course_resources(course_code, resource_dir="resources"):
+    filename = course_code.replace("/", "_") + ".json"
+    file_path = os.path.join(resource_dir, filename)
+    if os.path.exists(file_path):
+        with open(file_path, "r") as f:
+            return json.load(f)
+    return None

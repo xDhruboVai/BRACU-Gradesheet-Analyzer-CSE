@@ -1,3 +1,4 @@
+import os
 import streamlit as st
 import plotly.graph_objects as go
 import plotly.express as px
@@ -5,7 +6,7 @@ import pandas as pd
 from utils_parser import (
     extract, add_course, remove_course, simulate_retake,
     cgpa_projection, cgpa_planner, cod_planner, course_node,
-    get_unlocked_courses
+    get_unlocked_courses, get_all_course_codes, load_course_resources
 )
 from shared_data import (
     preq, arts_st, cst_st, core, science_st, ss_st, labs, comp_cod, tarc
@@ -75,8 +76,8 @@ else:
 
 
 # Tabs
-tab1, tab2, tab3, tab4, tab5 = st.tabs([
-    "Courses & Retake", "CGPA Planner", "COD Planner", "Visual Analytics", "Unlocked Courses"
+tab1, tab2, tab3, tab4, tab5, tab6 = st.tabs([
+    "Courses & Retake", "CGPA Planner", "COD Planner", "Visual Analytics", "Unlocked Courses", "Course Resources and Previous Questions"
 ])
 
 # Helper: calculate CGPA
@@ -125,16 +126,21 @@ with tab1:
     unsafe_allow_html=True,
 )
 
-
     col1, col2, col3 = st.columns([3, 3, 1])
     blur = col1.checkbox("Blur personal info")
     refresh = col3.button("🔄 Refresh Info")
 
     if refresh:
         refresh_info()
+        st.session_state.info_refreshed = True
         st.success("Student info refreshed!")
 
     if st.session_state.uploaded:
+        if not st.session_state.get("info_refreshed", False):
+            refresh_info()
+            st.session_state.info_refreshed = True
+            st.success("Student info refreshed!")
+
         name = '[Hidden]' if blur else st.session_state.name
         student_id = '[Hidden]' if blur else st.session_state.id
 
@@ -149,9 +155,16 @@ with tab1:
         # Add course
         with col_left:
             st.subheader("➕ Add a Course")
-            new_code = st.text_input("New Course Code", key="new_course")
+            all_course_codes = get_all_course_codes()
+            eligible_to_add = [
+                code for code in all_course_codes
+                if code not in st.session_state.courses_done
+                and code not in st.session_state.added_courses
+            ]
+
+            new_code = st.selectbox("Select New Course to Add", options=eligible_to_add, key="new_course_select")
             new_gpa = st.number_input("GPA", min_value=0.0, max_value=4.0, step=0.01, key="new_course_gpa")
-            can_add = new_code and new_code not in st.session_state.courses_done
+            can_add = bool(new_code)
 
             if st.button("Add Course", disabled=not can_add):
                 add_course(new_code, new_gpa, st.session_state.courses_done, st.session_state.semesters_done)
@@ -200,7 +213,6 @@ with tab1:
                     remove_course(course, st.session_state.courses_done, st.session_state.semesters_done)
             refresh_info()
             st.success(f"Removed: {', '.join(selected_remove)}")
-
     else:
         st.info("Upload a Gradesheet to begin.")
 
@@ -423,10 +435,8 @@ with tab5:
 
     unlocked, unlocks_by = get_unlocked_courses(st.session_state.courses_done)
 
-    # Create two columns: left for core, right for compulsory COD
     col1, col2 = st.columns(2)
 
-    # --- LEFT COLUMN: Unlocked Core Courses ---
     with col1:
         st.subheader("✅ Unlocked Core Courses")
         core_unlocked = sorted([c for c in unlocked if c in core])
@@ -434,11 +444,9 @@ with tab5:
             unlocked_list = unlocks_by.get(course, [])
             st.write(f"• {course}  ⇒  unlocks: {', '.join(unlocked_list) if unlocked_list else 'None'}")
 
-    # --- RIGHT COLUMN: Unlocked Compulsory COD Courses ---
     with col2:
         st.subheader("📘 Unlocked Compulsory COD Courses")
-        # comp_cod should already be defined
-        # tarc should also be defined, e.g.: tarc = {"EMB101", "HUM103"}
+
         comp_cod_unlocked = sorted([
             c for c in unlocked
             if c in comp_cod and c not in st.session_state.courses_done
@@ -453,3 +461,52 @@ with tab5:
 
     st.markdown("---")
     st.markdown("In order to check which COD course you should take, please check the COD Planner")
+
+RESOURCE_DIR = "resources"
+from utils_parser import get_all_course_codes, load_course_resources
+import os
+
+RESOURCE_DIR = "resources"
+
+def get_courses_with_resources():
+    valid_courses = []
+    for code in get_all_course_codes():
+        data = load_course_resources(code, resource_dir=RESOURCE_DIR)
+        if not data:
+            continue
+        has_resources = bool(data.get("resources"))
+        has_mid = bool(data.get("previous_questions", {}).get("mid"))
+        has_final = bool(data.get("previous_questions", {}).get("final"))
+        if has_resources or has_mid or has_final:
+            valid_courses.append(code)
+    return sorted(valid_courses)
+
+with tab6:
+    st.header("📚 Course Resources & Previous Questions")
+
+    course_options = get_courses_with_resources()
+    if not course_options:
+        st.info("No resource-rich courses available.")
+    else:
+        selected = st.selectbox("🔍 Search Course", options=course_options)
+
+        if selected:
+            data = load_course_resources(selected, resource_dir=RESOURCE_DIR)
+            st.subheader(data.get("title", selected))
+            st.write(data.get("description", "No description provided."))
+
+            if data.get("resources"):
+                st.markdown("### 📂 Resources")
+                for item in data["resources"]:
+                    icon = "📁" if item["type"] == "folder" else "🔗"
+                    st.markdown(f"{icon} [{item['name']}]({item['link']})")
+
+            mid = data.get("previous_questions", {}).get("mid")
+            final = data.get("previous_questions", {}).get("final")
+
+            if mid or final:
+                st.markdown("### 📝 Previous Questions")
+                if mid:
+                    st.markdown(f"🧪 [Midterm Questions]({mid})")
+                if final:
+                    st.markdown(f"🧠 [Final Questions]({final})")

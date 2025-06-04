@@ -1,0 +1,13 @@
+{
+  "title": "CSE321",
+  "description": "No description provided.",
+  "resources": [{
+      "name": "Playlist",
+      "link": "https://youtube.com/playlist?list=PL4iTVKzFqrcOYQ_Cu4IIcUgLygzmUvsLG&si=VWB-2_qPY4aR446N",
+      "type": "link"
+    }],
+  "previous_questions": {
+    "mid": "",
+    "final": ""
+  }
+}
