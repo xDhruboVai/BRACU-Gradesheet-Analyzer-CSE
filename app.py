@@ -493,7 +493,6 @@ with tab6:
         if selected:
             data = load_course_resources(selected, resource_dir=RESOURCE_DIR)
             st.subheader(data.get("title", selected))
-            st.write(data.get("description", "No description provided."))
 
             if data.get("resources"):
                 st.markdown("### 📂 Resources")
