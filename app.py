@@ -693,5 +693,4 @@ section.main {
 </div>
 """.replace("{quote}", quote), unsafe_allow_html=True)
 
-# Optional: Add a spacer to ensure it's visually below all Streamlit elements
 st.markdown("<div style='height: 60px;'></div>", unsafe_allow_html=True)
