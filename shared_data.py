@@ -2,7 +2,7 @@ preq = {
     "STA201": [], "HUM103": [], "BNG103": [], "EMB101": [],
     "MAT110": ["MAT120"], "MAT120": ["MAT215", "MAT216"], "MAT215": [], "MAT216": ["CSE330", "CSE423"],
     "PHY111": ["PHY112"], "PHY112": ["CSE250"],
-    "ENG101": ["ENG102"], "ENG102": [],
+    "ENG101": ["ENG102"], "ENG102": [], "ENG103": [],
     
     "CSE110": ["CSE111"], "CSE111": ["CSE220"], "CSE220": ["CSE221"],
     "CSE221": ["CSE321", "CSE331", "CSE370", "CSE422"],
@@ -32,7 +32,7 @@ science_st = {"CHE101", "BIO101", "ENV103"}
 
 arts_st = {
     "HUM101", "HUM102", "HST102", "HST104", "HUM207",
-    "ENG113", "ENG114", "ENG115", "ENG333"
+    "ENG113", "ENG114", "ENG115", "ENG333", "ENG103"
 }
 
 cst_st = {
