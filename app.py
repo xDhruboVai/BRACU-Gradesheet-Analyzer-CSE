@@ -542,7 +542,6 @@ QUOTES = [
     "The Force will be with you, always.",
     "You can do this all day.",
     "Not all those who wander are lost, some are just changing majors.",
-    "You’ve met with a terrible GPA, haven’t you? Not anymore.",
     "Push the payload. Pass the semester.",
     "A hero is someone who gets up, even when CGPA says no.",
     "Nothing is true, everything is permitted, except plag.",
