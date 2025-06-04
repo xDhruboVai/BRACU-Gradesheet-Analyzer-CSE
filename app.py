@@ -19,28 +19,36 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
+st.markdown('''
+<style>
+/* Set background */
+html, body, .stApp {
+    background-color: #000 !important;
+    color: white !important;
+}
+
+/* Text color */
+h1, h2, h3, h4, h5, h6, p, span, div, label, input, textarea {
+    color: white !important;
+}
+
+/* Highlight color */
+strong {
+    color: #80DFFF !important;
+}
+
+/* Streamlit widgets background */
+[data-testid="stSidebar"], [data-testid="stVerticalBlock"], .css-1cpxqw2, .css-ffhzg2 {
+    background-color: #000 !important;
+    color: white !important;
+}
+</style>
+''', unsafe_allow_html=True)
+
+
 # Theme and header
 st.title("📊 BRACU Gradesheet Analyzer")
 st.markdown("Analyze your BRAC University Gradesheet, calculate CGPA, visualize trends and plan courses.")
-
-# Dark theme
-st.markdown(
-    """
-    <style>
-    body {
-        background-color: #000000;
-        color: white;
-    }
-    .stApp {
-        background-color: #000000;
-    }
-    .css-18e3th9, .css-1d391kg {
-        background-color: #000000;
-    }
-    </style>
-    """,
-    unsafe_allow_html=True
-)
 
 # Session state setup
 if "name" not in st.session_state:
