@@ -675,7 +675,7 @@ section.main {
   <div class="footer-flex">
     <div class="footer-left">
         Built with ❤️ by <strong>Dihan Islam Dhrubo</strong><br>
-        <a href="https://github.com/xDhruboVai" target="_blank">🔗 GitHub Repo</a>
+        <a href="https://github.com/xDhruboVai/BRACU-Gradesheet-Analyzer-CSE-" target="_blank">🔗 GitHub Repo</a>
         <a href="https://www.linkedin.com/in/dihan-islam-dhrubo-79a904249/" target="_blank">💼 LinkedIn</a>
         <a href="https://www.facebook.com/dihanislam.dhrubo.5/" target="_blank">📘 Facebook</a>
         <div class="footer-links">
