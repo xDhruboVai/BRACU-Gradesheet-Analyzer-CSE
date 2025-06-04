@@ -11,7 +11,6 @@ from shared_data import (
     preq, arts_st, cst_st, core, science_st, ss_st, labs, comp_cod, tarc
 )
 
-# Page config
 st.set_page_config(
     page_title="BRACU Gradesheet Analyzer",
     page_icon="📊",
@@ -23,7 +22,7 @@ st.set_page_config(
 st.title("📊 BRACU Gradesheet Analyzer")
 st.markdown("Analyze your BRAC University Gradesheet, calculate CGPA, visualize trends and plan courses.")
 
-# CSS for dark theme
+# Dark theme
 st.markdown(
     """
     <style>
@@ -54,7 +53,6 @@ if "name" not in st.session_state:
     st.session_state.courses_done = {}
     st.session_state.semesters_done = {}
 
-# Upload transcript
 st.sidebar.title("Gradesheet Upload")
 
 if not st.session_state.uploaded:
@@ -228,7 +226,13 @@ with tab2:
                 current_cgpa = round(total_points / total_credits, 2) if total_credits else 0.0
                 st.metric("Current CGPA", current_cgpa)
             else:
-                result = cgpa_planner(st.session_state.courses_done, target_cgpa, semesters, courses_per_sem)
+                result = cgpa_planner(
+                    st.session_state.courses_done,
+                    round(target_cgpa, 2),
+                    semesters,
+                    courses_per_sem
+                )
+
                 st.metric("Max Possible CGPA", result.get("max_cgpa", 0.0))
                 if "required_avg_gpa" in result:
                     st.metric("Required Avg GPA", result["required_avg_gpa"])
@@ -360,7 +364,6 @@ with tab4:
                 continue
 
             avg_gpa = node.gpa
-            # Find the course with the lowest GPA (worst performing)
             lowest_course = min(node.courses, key=lambda c: c.gpa)
             lowest_course_str = f"{lowest_course.course} ({lowest_course.gpa:.2f})"
 
@@ -369,7 +372,6 @@ with tab4:
             cgpas.append(node.cgpa)
             most_off_track.append(lowest_course_str)
 
-        # Create DataFrame with all lists having the same length
         df = pd.DataFrame({
             "Semester": semesters_list,
             "GPA": gpas,
@@ -377,7 +379,7 @@ with tab4:
             "Most Off-Track Course": most_off_track
         })
 
-        # GPA Trend plot with hover showing worst course info
+
         fig_gpa = px.line(
             df,
             x="Semester",
@@ -385,7 +387,7 @@ with tab4:
             markers=True,
             title="GPA Trend Over Semesters",
             hover_data={
-                "Semester": False,  # x-axis already shows this
+                "Semester": False, 
                 "GPA": True,
                 "Most Off-Track Course": True,
             }
@@ -451,4 +453,3 @@ with tab5:
 
     st.markdown("---")
     st.markdown("In order to check which COD course you should take, please check the COD Planner")
-         
