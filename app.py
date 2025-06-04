@@ -517,3 +517,134 @@ with tab6:
                     st.markdown(f"🧪 [Midterm Questions]({mid})")
                 if final:
                     st.markdown(f"🧠 [Final Questions]({final})")
+
+import datetime
+import random
+
+QUOTES = [
+    "It's dangerous to go alone, take this semester seriously.",
+    "Finish the fight.",
+    "Hard work is the real power-up.",
+    "Winter is exam season. Prepare accordingly.",
+    "You were born to be the very best, like no one ever was.",
+    "Failure doesn't mean defeat, just a checkpoint.",
+    "The cake may be a lie, but your potential isn’t.",
+    "In the name of the Moon, ace that test!",
+    "Even the smallest person can change the course of CGPA.",
+    "Believe in the me that believes in you!",
+    "You have the power to rewrite your story.",
+    "Study. Rest. Respawn. Repeat.",
+    "No matter the odds, you keep going. That's your superpower.",
+    "Academic success is forged in fire and coffee.",
+    "The Force will be with you, always.",
+    "You can do this all day.",
+    "Not all those who wander are lost — some are just changing majors.",
+    "You’ve met with a terrible GPA, haven’t you? Not anymore.",
+    "Push the payload. Pass the semester.",
+    "A hero is someone who gets up, even when CGPA says no.",
+    "Nothing is true, everything is permitted, except cheating.",
+    "You don’t need a Senzu bean. You just need a plan.",
+    "When life gives you fetch quests, turn them into achievements.",
+    "Fus Ro Study!",
+    "You are more than your save files.",
+    "This semester... we ride."
+    "DEEZ NUTS"
+]
+
+
+def get_quote_of_the_day():
+    now = datetime.datetime.now()
+    seed = now.strftime('%Y-%m-%d-%H') + f"-{now.minute // 1 * 2}"
+    random.seed(seed)
+    return random.choice(QUOTES)
+
+quote = get_quote_of_the_day()
+
+st.markdown("""
+<style>
+/* Eliminate extra bottom space */
+section.main {
+    padding-bottom: 0 !important;
+}
+
+/* Footer styles */
+.footer-container {
+    padding: 1.5rem 1rem 1rem 1rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    font-family: 'Segoe UI', sans-serif;
+    margin-bottom: 0 !important;
+}
+
+.footer-flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 2rem;
+}
+
+.footer-left {
+    font-size: 16px;
+    color: #ddd;
+    line-height: 1.6;
+}
+
+.footer-left strong {
+    font-size: 18px;
+    color: white;
+}
+
+.footer-left a {
+    display: inline-block;
+    margin-right: 16px;
+    margin-top: 6px;
+    color: #80DFFF;
+    font-weight: 600;
+    text-decoration: none;
+    font-size: 15px;
+    transition: color 0.3s ease;
+}
+
+.footer-left a:hover {
+    color: white;
+}
+
+.footer-right {
+    text-align: right;
+    color: #80DFFF;
+    font-style: italic;
+    font-size: 16px;
+    max-width: 400px;
+}
+
+@media (max-width: 768px) {
+    .footer-flex {
+        flex-direction: column;
+        text-align: center;
+    }
+    .footer-right {
+        text-align: center;
+        margin-top: 0.5rem;
+    }
+}
+/* Remove bottom space */
+.block-container {
+    padding-bottom: 0rem !important;
+}
+
+</style>
+
+<div class="footer-container">
+  <div class="footer-flex">
+    <div class="footer-left">
+        Built with ❤️ by <strong>Dihan Islam Dhrubo</strong><br>
+        <a href="https://github.com/xDhruboVai" target="_blank">🔗 Link to the Repo</a>
+        <a href="https://www.linkedin.com/in/dihan-islam-dhrubo-79a904249/" target="_blank">💼 LinkedIn</a>
+        <a href="https://www.facebook.com/dihanislam.dhrubo.5/" target="_blank">📘 Facebook</a>
+    </div>
+    <div class="footer-right">
+        “{quote}”
+    </div>
+  </div>
+</div>
+""".replace("{quote}", quote), unsafe_allow_html=True)
