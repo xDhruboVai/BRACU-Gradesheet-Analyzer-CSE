@@ -19,6 +19,9 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
+with open("meta.html") as f:
+    st.components.v1.html(f.read(), height=0)
+
 st.markdown('''
 <style>
 /* Set background */
