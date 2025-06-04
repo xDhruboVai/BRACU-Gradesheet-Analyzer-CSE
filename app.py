@@ -545,7 +545,7 @@ QUOTES = [
     "It's dangerous to go alone, take this semester seriously.",
     "Finish the fight.",
     "Hard work is the real power-up.",
-    "Winter is exam season. Prepare accordingly.",
+    "Every season is exam season. Prepare accordingly.",
     "You were born to be the very best, like no one ever was.",
     "Failure doesn't mean defeat, just a checkpoint.",
     "The cake may be a lie, but your potential isn’t.",
@@ -586,56 +586,75 @@ section.main {
     padding-bottom: 0 !important;
 }
 
-/* Footer styles */
+/* Footer container with subtle box */
 .footer-container {
-    padding: 1.5rem 1rem 1rem 1rem;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    background-color: rgba(255, 255, 255, 0.02);
+    padding: 1rem;
+    margin-top: 3rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
     font-family: 'Segoe UI', sans-serif;
-    margin-bottom: 0 !important;
+    font-size: 13px;
+    color: #ccc;
 }
 
+/* Flex layout */
 .footer-flex {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
     flex-wrap: wrap;
-    gap: 2rem;
+    gap: 1.5rem;
 }
 
+/* Left side */
 .footer-left {
-    font-size: 16px;
-    color: #ddd;
-    line-height: 1.6;
+    max-width: 480px;
+    line-height: 1.5;
 }
 
 .footer-left strong {
-    font-size: 18px;
+    font-size: 14px;
     color: white;
 }
 
 .footer-left a {
     display: inline-block;
-    margin-right: 16px;
-    margin-top: 6px;
+    margin-right: 12px;
+    margin-top: 4px;
     color: #80DFFF;
-    font-weight: 600;
     text-decoration: none;
-    font-size: 15px;
-    transition: color 0.3s ease;
+    font-weight: 500;
+    font-size: 13px;
 }
 
 .footer-left a:hover {
     color: white;
 }
 
-.footer-right {
-    text-align: right;
-    color: #80DFFF;
-    font-style: italic;
-    font-size: 16px;
-    max-width: 400px;
+.footer-links {
+    margin-top: 8px;
 }
 
+.footer-note {
+    margin-top: 8px;
+    font-style: italic;
+    font-size: 12px;
+    color: #aaa;
+}
+
+/* Right side (quote) */
+.footer-right {
+    color: #80DFFF;
+    font-style: italic;
+    font-size: 24px;
+    max-width: 420px;
+    padding-top: 4px;
+    margin-left: 20px;
+    text-align: left;
+}
+
+/* Responsive tweaks */
 @media (max-width: 768px) {
     .footer-flex {
         flex-direction: column;
@@ -643,23 +662,29 @@ section.main {
     }
     .footer-right {
         text-align: center;
-        margin-top: 0.5rem;
+        margin-left: 0;
+        margin-top: 1rem;
+    }
+    .footer-note {
+        text-align: center;
     }
 }
-/* Remove bottom space */
-.block-container {
-    padding-bottom: 0rem !important;
-}
-
 </style>
 
 <div class="footer-container">
   <div class="footer-flex">
     <div class="footer-left">
         Built with ❤️ by <strong>Dihan Islam Dhrubo</strong><br>
-        <a href="https://github.com/xDhruboVai" target="_blank">🔗 Link to GitHub the Repo</a>
+        <a href="https://github.com/xDhruboVai" target="_blank">🔗 GitHub Repo</a>
         <a href="https://www.linkedin.com/in/dihan-islam-dhrubo-79a904249/" target="_blank">💼 LinkedIn</a>
         <a href="https://www.facebook.com/dihanislam.dhrubo.5/" target="_blank">📘 Facebook</a>
+        <div class="footer-links">
+            <a href="https://youtu.be/RPpUlPvq5Fo" target="_blank">📺 Tutorial</a><br>
+            <a href="https://forms.gle/U4yiB45m8vSDAwU3A" target="_blank">💬 Suggest / Report</a>
+        </div>
+        <div class="footer-note">
+            📌 Bookmark the site · 🙏 Thanks for using the app!
+        </div>
     </div>
     <div class="footer-right">
         “{quote}”
@@ -667,3 +692,6 @@ section.main {
   </div>
 </div>
 """.replace("{quote}", quote), unsafe_allow_html=True)
+
+# Optional: Add a spacer to ensure it's visually below all Streamlit elements
+st.markdown("<div style='height: 60px;'></div>", unsafe_allow_html=True)
