@@ -231,12 +231,25 @@ with tab1:
 with tab2:
     st.header("📊 CGPA Planner & Projection")
 
-    with st.form("cgpa_planner_form"):
-        col1, col2 = st.columns(2)
-        target_cgpa = col1.number_input("🎯 Target CGPA", min_value=0.0, max_value=4.0, step=0.01)
-        semesters = col2.number_input("📆 Future Semesters", min_value=0, step=1)
-        courses_per_sem = st.slider("📚 Courses per Semester", min_value=0, max_value=6, value=4)
-        submitted = st.form_submit_button("📈 Run CGPA Planner")
+    st.subheader("🎯 Set Your Target CGPA")
+    target_cgpa = st.number_input("Target CGPA", min_value=0.0, max_value=4.0, step=0.01)
+
+    st.markdown("---")
+
+    col1, col2 = st.columns(2)
+
+    # === CGPA Planner ===
+    with col1:
+        st.subheader("🧮 CGPA Planner")
+
+        with st.form("cgpa_planner_form"):
+            st.write("Plan your upcoming semesters:")
+
+            sem_col1, sem_col2 = st.columns(2)
+            semesters = sem_col1.number_input("Future Semesters", min_value=0, step=1)
+            courses_per_sem = sem_col2.slider("Courses per Semester", min_value=0, max_value=6, value=4)
+
+            submitted = st.form_submit_button("📈 Run CGPA Planner")
 
         if submitted:
             if semesters == 0 or courses_per_sem == 0:
@@ -262,14 +275,18 @@ with tab2:
                 if "message" in result:
                     st.info(result["message"])
 
-    st.markdown("---")
-    st.subheader("🔍 Max CGPA Projection")
+    # === CGPA Projection ===
+    with col2:
+        st.subheader("🔍 Max CGPA Projection")
+        st.write("Estimate your highest achievable CGPA from current progress.")
 
-    if st.button("Run Max CGPA Projection"):
-        proj = cgpa_projection(st.session_state.courses_done, target_cgpa)
-        st.metric("Max Achievable CGPA", proj.get("max_cgpa", 0.0))
-        if "message" in proj:
-            st.info(proj["message"])
+        if st.button("Run Max CGPA Projection"):
+            proj = cgpa_projection(st.session_state.courses_done, target_cgpa)
+            st.metric("Max Achievable CGPA", proj.get("max_cgpa", 0.0))
+            if "message" in proj:
+                st.info(proj["message"])
+
+
 
 # ========== TAB 3 ==========
 with tab3:
