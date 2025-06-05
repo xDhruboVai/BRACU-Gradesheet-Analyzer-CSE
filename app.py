@@ -554,21 +554,21 @@ with tab7:
     with st.expander(f"✅ All Courses Completed ({len(courses_done)})"):
         st.write("• " + "\n• ".join(sorted(courses_done.keys())))
 
-    with st.expander(f"🎓 Core Courses ({len(core_courses)})"):
+    with st.expander(f"Core Courses ({len(core_courses)})"):
         st.write("• " + "\n• ".join(sorted(core_courses)) if core_courses else "No core courses completed.")
 
-    with st.expander(f"📘 Compulsory Core Courses ({len(compulsory_core)})"):
+    with st.expander(f"Compulsory Core Courses ({len(compulsory_core)})"):
         st.write("• " + "\n• ".join(sorted(compulsory_core)) if compulsory_core else "No compulsory core courses completed.")
 
-    with st.expander(f"🔍 Elective Courses ({len(elective_courses)})"):
+    with st.expander(f"Elective Courses ({len(elective_courses)})"):
         st.write("• " + "\n• ".join(sorted(elective_courses)) if elective_courses else "No electives completed.")
 
     # Separate expanders for each COD stream
     cod_streams = {
-        "🌐 CST (COD)": cst_st,
-        "🎨 Arts (COD)": arts_st,
-        "📚 Social Sciences (COD)": ss_st,
-        "🔬 Science (COD)": science_st
+        "CST (COD)": cst_st,
+        "Arts (COD)": arts_st,
+        "Social Sciences (COD)": ss_st,
+        "Science (COD)": science_st
     }
 
     for label, course_set in cod_streams.items():
