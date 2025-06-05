@@ -88,7 +88,7 @@ else:
 
 # Tabs
 tab1, tab2, tab3, tab4, tab5, tab6, tab7 = st.tabs([
-    "Courses & Retake", "CGPA Planner", "COD Planner", "Visual Analytics", "Unlocked Courses", "Course Resources and Previous Questions", "Completed Course Breakdown"
+    "Courses & Retake", "CGPA Planner", "COD Planner", "Visual Analytics", "Unlocked Courses", "Course Resources", "Completed Course Breakdown"
 ])
 
 
