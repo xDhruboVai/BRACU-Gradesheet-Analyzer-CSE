@@ -50,7 +50,7 @@ strong {
 
 
 # Theme and header
-st.title("📊 BRACU Gradesheet Analyzer")
+st.title("📊 BRACU Gradesheet Analyzer (CSE)")
 st.markdown("Analyze your BRAC University Gradesheet, calculate CGPA, visualize trends and plan courses.")
 
 # Session state setup
