@@ -185,6 +185,8 @@ with tab1:
                 st.session_state.added_courses.add(new_code)
                 refresh_info()
                 st.success(f"Added {new_code} with GPA {new_gpa:.2f}")
+                st.info("ℹ️ Please press the '🔄 Refresh Info' button or the values may become incorrect.")
+
 
         # Retake course
         with col_right:
@@ -203,6 +205,8 @@ with tab1:
                 add_course(course_to_retake, retake_gpa, st.session_state.courses_done, st.session_state.semesters_done)
                 refresh_info()
                 st.success(f"Retaken {course_to_retake} with new GPA {retake_gpa:.2f}")
+                st.info("ℹ️ Please press the '🔄 Refresh Info' button or the values may become incorrect.")
+
 
         st.markdown("---")
         st.subheader("🗑️ Remove a Course")
@@ -226,6 +230,9 @@ with tab1:
                     remove_course(course, st.session_state.courses_done, st.session_state.semesters_done)
             refresh_info()
             st.success(f"Removed: {', '.join(selected_remove)}")
+            st.info("ℹ️ Please press the '🔄 Refresh Info' button or the values may become incorrect.")
+
+
     else:
         st.info("Upload a Gradesheet to begin.")
 
@@ -540,44 +547,73 @@ with tab6:
                 if final:
                     st.markdown(f"🧠 [Final Questions]({final})")
 
-# ========== TAB 7 ==========
+#=============TAB 7==============
 with tab7:
-    st.header("📋 Completed Courses Breakdown")
+    st.header("Completed Courses Breakdown")
 
     courses_done = st.session_state.courses_done
 
-    core_courses = [c for c in courses_done if c in core]
-    compulsory_core = [c for c in courses_done if c in comp_cod]
-    elective_courses = [c for c in courses_done if c not in core and c not in comp_cod and c.startswith("CSE")]
-    cod_courses = [c for c in courses_done if c in cst_st | arts_st | ss_st | science_st]
+    # Organize courses into categories
+    core_data = []
+    comp_cod_data = []
+    elective_data = []
+    cod_data = []
 
-    with st.expander(f"✅ All Courses Completed ({len(courses_done)})"):
-        st.write("• " + "\n• ".join(sorted(courses_done.keys())))
+    for code in sorted(courses_done.keys()):
+        if code in core:
+            core_data.append({"Course Code": code})
+        elif code in comp_cod:
+            comp_cod_data.append({"Course Code": code})
+        elif code.startswith("CSE") and code not in core and code not in comp_cod:
+            elective_data.append({"Course Code": code})
+        elif code in cst_st:
+            cod_data.append({"Course Code": code, "Stream": "CST"})
+        elif code in arts_st:
+            cod_data.append({"Course Code": code, "Stream": "Arts"})
+        elif code in ss_st:
+            cod_data.append({"Course Code": code, "Stream": "Social Sciences"})
+        elif code in science_st:
+            cod_data.append({"Course Code": code, "Stream": "Science"})
 
-    with st.expander(f"Core Courses ({len(core_courses)})"):
-        st.write("• " + "\n• ".join(sorted(core_courses)) if core_courses else "No core courses completed.")
+    # Layout with 4 columns
+    col1, col2, col3, col4 = st.columns(4)
 
-    with st.expander(f"Compulsory Core Courses ({len(compulsory_core)})"):
-        st.write("• " + "\n• ".join(sorted(compulsory_core)) if compulsory_core else "No compulsory core courses completed.")
+    with col1:
+        st.subheader(f"Core Courses ({len(core_data)})")
+        if core_data:
+            df_core = pd.DataFrame(core_data)
+            df_core.index = range(1, len(df_core) + 1)
+            st.dataframe(df_core, use_container_width=True, height=300)
+        else:
+            st.info("No core courses completed.")
 
-    with st.expander(f"Elective Courses ({len(elective_courses)})"):
-        st.write("• " + "\n• ".join(sorted(elective_courses)) if elective_courses else "No electives completed.")
+    with col2:
+        st.subheader(f"Compulsory Core ({len(comp_cod_data)})")
+        if comp_cod_data:
+            df_comp = pd.DataFrame(comp_cod_data)
+            df_comp.index = range(1, len(df_comp) + 1)
+            st.dataframe(df_comp, use_container_width=True, height=300)
+        else:
+            st.info("No compulsory core courses completed.")
 
-    # Separate expanders for each COD stream
-    cod_streams = {
-        "CST (COD)": cst_st,
-        "Arts (COD)": arts_st,
-        "Social Sciences (COD)": ss_st,
-        "Science (COD)": science_st
-    }
+    with col3:
+        st.subheader(f"COD Courses ({len(cod_data)})")
+        if cod_data:
+            df_cod = pd.DataFrame(cod_data).sort_values(by=["Stream", "Course Code"])
+            df_cod.index = range(1, len(df_cod) + 1)
+            st.dataframe(df_cod, use_container_width=True, height=300)
+        else:
+            st.info("No COD courses completed.")
 
-    for label, course_set in cod_streams.items():
-        taken = [c for c in courses_done if c in course_set]
-        with st.expander(f"{label} - {len(taken)} completed"):
-            if taken:
-                st.write("• " + "\n• ".join(sorted(taken)))
-            else:
-                st.write("No courses completed in this stream.")
+    with col4:
+        st.subheader(f"Electives ({len(elective_data)})")
+        if elective_data:
+            df_elec = pd.DataFrame(elective_data)
+            df_elec.index = range(1, len(df_elec) + 1)
+            st.dataframe(df_elec, use_container_width=True, height=300)
+        else:
+            st.info("No elective courses completed.")
+
 
 import datetime
 import random
