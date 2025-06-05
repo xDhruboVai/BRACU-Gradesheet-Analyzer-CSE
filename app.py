@@ -549,7 +549,7 @@ QUOTES = [
     "You were born to be the very best, like no one ever was.",
     "Failure doesn't mean defeat, just a checkpoint.",
     "The cake may be a lie, but your potential isn’t.",
-    "In the name of the Moon, ace that test!",
+    "The only choice you have is how good you WILL do in your test. We always have a choice. Make the right choice.",
     "Even the smallest person can change the course of CGPA.",
     "Believe in the me that believes in you!",
     "You have the power to rewrite your story.",
@@ -564,10 +564,12 @@ QUOTES = [
     "Nothing is true, everything is permitted, except plag.",
     "You don’t need a Senzu bean. You just need a plan.",
     "When life gives you fetch quests, turn them into achievements.",
-    "Fus Ro Study!",
+    "FUS RO PASS!",
     "You are more than your save files.",
     "This semester... we ride.",
-    "DEEZ NUTS"
+    "DEEZ NUTS",
+    "SHINZOU WO SASAGEYO",
+    "Tatakae."
 ]
 
 
