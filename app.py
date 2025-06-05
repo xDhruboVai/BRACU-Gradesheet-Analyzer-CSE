@@ -541,7 +541,6 @@ with tab6:
                     st.markdown(f"🧠 [Final Questions]({final})")
 
 # ========== TAB 7 ==========
-# ========== TAB 7 ==========
 with tab7:
     st.header("📋 Completed Courses Breakdown")
 
