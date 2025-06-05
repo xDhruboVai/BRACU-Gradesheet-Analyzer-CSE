@@ -588,7 +588,7 @@ with tab7:
             st.info("No core courses completed.")
 
     with col2:
-        st.subheader(f"Compulsory Core ({len(comp_cod_data)})")
+        st.subheader(f"Compulsory COD ({len(comp_cod_data)})")
         if comp_cod_data:
             df_comp = pd.DataFrame(comp_cod_data)
             df_comp.index = range(1, len(df_comp) + 1)
