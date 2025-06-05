@@ -87,9 +87,11 @@ else:
 
 
 # Tabs
-tab1, tab2, tab3, tab4, tab5, tab6 = st.tabs([
-    "Courses & Retake", "CGPA Planner", "COD Planner", "Visual Analytics", "Unlocked Courses", "Course Resources and Previous Questions"
+tab1, tab2, tab3, tab4, tab5, tab6, tab7 = st.tabs([
+    "Courses & Retake", "CGPA Planner", "COD Planner", "Visual Analytics", "Unlocked Courses", "Course Resources and Previous Questions", "Completed Course Breakdown"
 ])
+
+
 
 # Helper: calculate CGPA
 def calculate_cgpa():
@@ -537,6 +539,46 @@ with tab6:
                     st.markdown(f"🧪 [Midterm Questions]({mid})")
                 if final:
                     st.markdown(f"🧠 [Final Questions]({final})")
+
+# ========== TAB 7 ==========
+# ========== TAB 7 ==========
+with tab7:
+    st.header("📋 Completed Courses Breakdown")
+
+    courses_done = st.session_state.courses_done
+
+    core_courses = [c for c in courses_done if c in core]
+    compulsory_core = [c for c in courses_done if c in comp_cod]
+    elective_courses = [c for c in courses_done if c not in core and c not in comp_cod and c.startswith("CSE")]
+    cod_courses = [c for c in courses_done if c in cst_st | arts_st | ss_st | science_st]
+
+    with st.expander(f"✅ All Courses Completed ({len(courses_done)})"):
+        st.write("• " + "\n• ".join(sorted(courses_done.keys())))
+
+    with st.expander(f"🎓 Core Courses ({len(core_courses)})"):
+        st.write("• " + "\n• ".join(sorted(core_courses)) if core_courses else "No core courses completed.")
+
+    with st.expander(f"📘 Compulsory Core Courses ({len(compulsory_core)})"):
+        st.write("• " + "\n• ".join(sorted(compulsory_core)) if compulsory_core else "No compulsory core courses completed.")
+
+    with st.expander(f"🔍 Elective Courses ({len(elective_courses)})"):
+        st.write("• " + "\n• ".join(sorted(elective_courses)) if elective_courses else "No electives completed.")
+
+    # Separate expanders for each COD stream
+    cod_streams = {
+        "🌐 CST (COD)": cst_st,
+        "🎨 Arts (COD)": arts_st,
+        "📚 Social Sciences (COD)": ss_st,
+        "🔬 Science (COD)": science_st
+    }
+
+    for label, course_set in cod_streams.items():
+        taken = [c for c in courses_done if c in course_set]
+        with st.expander(f"{label} - {len(taken)} completed"):
+            if taken:
+                st.write("• " + "\n• ".join(sorted(taken)))
+            else:
+                st.write("No courses completed in this stream.")
 
 import datetime
 import random
