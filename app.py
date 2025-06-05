@@ -630,7 +630,7 @@ QUOTES = [
     "Even the smallest person can change the course of CGPA.",
     "Believe in the me that believes in you!",
     "You have the power to rewrite your story.",
-    "Study. Rest. Sir ek mark dile grade bare. Repeat.",
+    "Study. Rest. 'Sir ek mark dile grade bare'. Repeat.",
     "No matter the odds, you keep going. That's your superpower.",
     "Academic success is forged in fire and coffee.",
     "The Force will be with you, always.",
