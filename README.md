@@ -71,6 +71,20 @@ These keywords are embedded naturally throughout this README and the app’s met
 
 ## 🛠 Run Locally
 
+### Option 1: Using Docker (Recommended) (Docker must be installed and configured)
+
+```bash
+git clone https://github.com/xDhruboVai/BRACU-Gradesheet-Analyzer-CSE-.git
+cd BRACU-Gradesheet-Analyzer-CSE-/docker
+./run.sh start
+```
+
+Access at **http://localhost:8501**
+
+📋 **[Complete Docker Setup Guide](docker/DOCKER_LOCAL.md)** - Step-by-step instructions for Docker setup
+
+### Option 2: Direct Python Setup
+
 ```bash
 git clone https://github.com/xDhruboVai/transcript-analyzer.git
 cd transcript-analyzer
@@ -86,6 +100,20 @@ streamlit run app.py
 - **Streamlit**  
 - **Plotly**  
 - **PyMuPDF** (for PDF parsing)
+- **Docker** (for containerized deployment)
+
+---
+
+## 🐳 Docker Support
+
+This project includes a complete Docker setup for easy local deployment:
+
+- **Containerized Environment**: Run the app in an isolated Docker container
+- **Simple Management**: Easy start/stop commands with included scripts
+- **Cross-Platform**: Works on Windows, macOS, and Linux
+- **No Dependencies**: Only requires Docker - no Python setup needed
+
+📋 **[Docker Setup Guide](docker/DOCKER_LOCAL.md)** - Complete instructions for Docker usage
 
 ---
 
