@@ -64,7 +64,7 @@ if "name" not in st.session_state:
     st.session_state.added_courses = set()
     st.session_state.courses_done = {}
     st.session_state.semesters_done = {}
-    st.session_state.dept = "CSE" 
+    st.session_state.dept = "CSE"
     
 if "prev_dept" not in st.session_state:
     st.session_state.prev_dept = st.session_state.get("dept", "CSE")
