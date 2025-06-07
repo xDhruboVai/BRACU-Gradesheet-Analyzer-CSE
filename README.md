@@ -52,13 +52,16 @@ Designed with BRACU students in mind, the analyzer allows you to:
 
 ## 📁 How to Run Locally
 
-```bash
-# Clone the repo
-git clone https://github.com/xDhruboVai/transcript-analyzer.git
-cd transcript-analyzer
+# 1. Clone the repository
+git clone https://github.com/xDhruboVai/BRACU-Gradesheet-Analyzer-CSE.git
+cd BRACU-Gradesheet-Analyzer-CSE
 
-# Install dependencies
+# 2. (Optional) Create a virtual environment
+python -m venv venv
+source venv/bin/activate   # On Windows: venv\Scripts\activate
+
+# 3. Install required dependencies
 pip install -r requirements.txt
 
-# Run the app
+# 4. Launch the Streamlit app
 streamlit run app.py
