@@ -52,16 +52,24 @@ Designed with BRACU students in mind, the analyzer allows you to:
 
 ## 📁 How to Run Locally
 
-# 1. Clone the repository
+Follow these steps to set up and run the app on your local machine:
+
+## 📁 How to Run Locally
+
+```bash
+# Clone the repository
 git clone https://github.com/xDhruboVai/BRACU-Gradesheet-Analyzer-CSE.git
 cd BRACU-Gradesheet-Analyzer-CSE
 
-# 2. (Optional) Create a virtual environment
+# (Optional) Create a virtual environment
 python -m venv venv
 source venv/bin/activate   # On Windows: venv\Scripts\activate
 
-# 3. Install required dependencies
+# Install required dependencies
 pip install -r requirements.txt
 
-# 4. Launch the Streamlit app
+# Run the Streamlit app
 streamlit run app.py
+
+# The app will open at http://localhost:8501/
+#At any point if it says x: command not found, use python -m rest of the command
