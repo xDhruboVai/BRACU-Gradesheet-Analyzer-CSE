@@ -35,8 +35,14 @@ preq = {
 
     # Inferred from COD sets
     "HUM101": [], "HST102": [], "HST104": [], "HUM207": [],
-    "ENG113": [], "ENG114": [], "ENG115": [], "ENG333": []
+    "ENG113": [], "ENG114": [], "ENG115": [], "ENG333": [],
+
+    # Newly added courses
+    "ACT201": [], "ACT202": [], "BUS101": [], "BUS202": [],
+    "BCH101": [], "BTE101": [], "CHE110": [], "CHN101": [], "FRN101": [],
+    "FIN301": [], "GEO101": [], "LAW101": [], "HUM111": [], "HST407": [], "STA301": []
 }
+
 
 core = {
     "CSE110", "CSE111", "CSE220", "CSE221", "CSE230", "CSE250", "CSE251", "CSE260",
