@@ -51,10 +51,7 @@ Designed with BRACU students in mind, the analyzer allows you to:
 ---
 
 ## 📁 How to Run Locally
-
 Follow these steps to set up and run the app on your local machine:
-
-## 📁 How to Run Locally
 
 ```bash
 # Clone the repository
