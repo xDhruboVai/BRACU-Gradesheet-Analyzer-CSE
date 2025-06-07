@@ -114,7 +114,6 @@ tab1, tab2, tab3, tab4, tab5, tab6, tab7 = st.tabs([
 ])
 
 
-
 # Helper: calculate CGPA
 def calculate_cgpa():
     courses_done = st.session_state.courses_done
