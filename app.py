@@ -294,13 +294,14 @@ with tab2:
                 current_cgpa = round(total_points / total_credits, 2) if total_credits else 0.0
                 st.metric("Current CGPA", current_cgpa)
             else:
+                required_credits = 136 if st.session_state.dept == "CSE" else 124
                 result = cgpa_planner(
                     st.session_state.courses_done,
                     round(target_cgpa, 2),
                     semesters,
-                    courses_per_sem
+                    courses_per_sem,
+                    total_required_credits=required_credits
                 )
-
                 st.metric("Max Possible CGPA", result.get("max_cgpa", 0.0))
                 if "required_avg_gpa" in result:
                     st.metric("Required Avg GPA", result["required_avg_gpa"])
@@ -313,7 +314,8 @@ with tab2:
         st.write("Estimate your highest achievable CGPA from current progress.")
 
         if st.button("Run Max CGPA Projection"):
-            proj = cgpa_projection(st.session_state.courses_done, target_cgpa)
+            required_credits = 136 if st.session_state.dept == "CSE" else 124
+            proj = cgpa_projection(st.session_state.courses_done, target_cgpa, total_required_credits=required_credits)
             st.metric("Max Achievable CGPA", proj.get("max_cgpa", 0.0))
             if "message" in proj:
                 st.info(proj["message"])
@@ -377,7 +379,9 @@ with tab4:
     st.header("📊 Visual Analytics Dashboard")
 
     completed = st.session_state.total_credits
-    remaining = 136 - completed
+    required_credits = 136 if st.session_state.dept == "CSE" else 124
+    remaining = required_credits - completed
+
 
     fig_pie = go.Figure(data=[go.Pie(
         labels=["Completed", "Remaining"],
@@ -387,7 +391,7 @@ with tab4:
     )])
     fig_pie.update_traces(textinfo='label+percent')
     fig_pie.update_layout(
-        title="Credits Earned vs Remaining (out of 136)",
+        title=f"Credits Earned vs Remaining (out of {required_credits})",
         template="plotly_dark",
         height=400
     )

@@ -1,6 +1,7 @@
 import os
 import json
 import fitz
+from streamlit.runtime.scriptrunner import get_script_run_ctx
 from shared_data import preq, cst_st, arts_st, ss_st, science_st, to_remove, grades, core, comp_cod, tarc
 
 class course_node:
@@ -149,8 +150,7 @@ def remove_course(course_code, courses_done, semesters_done):
                 del semesters_done[semester]
             return
 
-def cgpa_projection(courses_done, target_cgpa=None):
-    total_required_credits = 136
+def cgpa_projection(courses_done, target_cgpa=None, total_required_credits=136):
     earned_credits = sum(node.credit for node in courses_done.values())
     earned_points = sum(node.gpa * node.credit for node in courses_done.values())
 
@@ -190,8 +190,7 @@ def cgpa_projection(courses_done, target_cgpa=None):
             )
     return result
 
-def cgpa_planner(courses_done, target_cgpa=None, semesters=0, courses_per_sem=0):
-    total_required_credits = 136
+def cgpa_planner(courses_done, target_cgpa=None, semesters=0, courses_per_sem=0, total_required_credits=136):
     total_credits_done = sum(course.credit for course in courses_done.values())
     quality_points_done = sum(course.gpa * course.credit for course in courses_done.values())
 
