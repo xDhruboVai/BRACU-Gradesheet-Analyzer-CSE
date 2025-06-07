@@ -1,0 +1,17 @@
+{
+  "title": "CSE423",
+  "description": "No description provided.",
+  "resources": [{
+      "name": "Lecture Slides and Notes",
+      "link": "https://drive.google.com/drive/folders/17QRi10YRwzKIBgP90Cf3-bVltscpvxiR?fbclid=IwY2xjawKgNTZleHRuA2FlbQIxMABicmlkETF1akNZWWtjMmMwQVYwcEZ0AR7h9ijIzurQVDClyb-ph4CTok7uThyTfM5zWtU3NMmi_UrGY4xjm5lgYEXzSA_aem_MBq4nCpx2AQwYAy9iuPmtw",
+      "type": "link"
+    },{
+      "name": "Materials",
+      "link": "https://drive.google.com/file/d/1lyQEgTvTdd4JuZfh7rYAS3d1rMjh0M-D/view?fbclid=IwY2xjawKgNVNleHRuA2FlbQIxMABicmlkETF1akNZWWtjMmMwQVYwcEZ0AR7nT5JhIqEWELrkrP4DaqmZG1JjnOCtNnHpLmutbknpcozFpigG-_bFdq06RA_aem_L9wcWSurxA-4waeg-PBl_w",
+      "type": "link"
+    }],
+  "previous_questions": {
+    "mid": "",
+    "final": ""
+  }
+}

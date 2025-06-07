@@ -1,0 +1,18 @@
+{
+  "title": "CSE251",
+  "description": "No description provided.",
+  "resources": [{
+      "name": "Playlist",
+      "link": "https://www.youtube.com/playlist?list=PLaGWhzUB5BBthrRrLHpds41A29cPE0tnW",
+      "type": "link"
+    },
+    {
+      "name": "Practice Sheets",
+      "link": "https://docs.google.com/document/d/1Y5DQWqEbwzJ204owxNtz9Uz_kYvaR20z/",
+      "type": "folder"
+    }],
+  "previous_questions": {
+    "mid": "https://drive.google.com/drive/folders/1VC8TeExyFd8Kzm8ZGFfLwYvMn590UtXR",
+    "final": "https://drive.google.com/drive/folders/1VC8TeExyFd8Kzm8ZGFfLwYvMn590UtXR"
+  }
+}

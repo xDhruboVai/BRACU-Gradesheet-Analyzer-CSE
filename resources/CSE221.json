@@ -1,0 +1,15 @@
+{
+  "title": "CSE221",
+  "description": "No description provided.",
+  "resources": [
+    {
+      "name": "Playlist",
+      "link": "https://www.youtube.com/playlist?app=desktop&list=PLPFDgD6kUaiRCGxuHu3GWhFHCKFTnnZV0",
+      "type": "link"
+    }
+  ],
+  "previous_questions": {
+    "mid": "",
+    "final": ""
+  }
+}

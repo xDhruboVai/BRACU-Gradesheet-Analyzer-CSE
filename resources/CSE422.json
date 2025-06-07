@@ -1,0 +1,17 @@
+{
+  "title": "CSE422",
+  "description": "No description provided.",
+  "resources": [{
+      "name": "Playlist",
+      "link": "https://www.youtube.com/playlist?app=desktop&list=PLCh3_NUqW7_KOLBOn6zGZWJY1MTNkshpZ",
+      "type": "link"
+    },{
+      "name": "Theory Notes",
+      "link": "https://drive.google.com/file/d/1nUy2OeNZ14E2zh0BP8TpQx-pJjjpd8l4/view?fbclid=IwY2xjawKgMhNleHRuA2FlbQIxMABicmlkETF1akNZWWtjMmMwQVYwcEZ0AR7h9ijIzurQVDClyb-ph4CTok7uThyTfM5zWtU3NMmi_UrGY4xjm5lgYEXzSA_aem_MBq4nCpx2AQwYAy9iuPmtw&pli=1",
+      "type": "link"
+    }],
+  "previous_questions": {
+    "mid": "https://drive.google.com/drive/folders/1pJ1QOW7ytfZd6Sn8WtsP2H7N4c0air4e?fbclid=IwY2xjawKgMuJleHRuA2FlbQIxMABicmlkETF1akNZWWtjMmMwQVYwcEZ0AR7nT5JhIqEWELrkrP4DaqmZG1JjnOCtNnHpLmutbknpcozFpigG-_bFdq06RA_aem_L9wcWSurxA-4waeg-PBl_w",
+    "final": "https://drive.google.com/drive/folders/1lugGN6rJecsr_PdvmqRUdmnqfbgypKpc?fbclid=IwY2xjawKgMw1leHRuA2FlbQIxMABicmlkETF1akNZWWtjMmMwQVYwcEZ0AR7ncbI4ds9jCO1xzuOaqgKlv080dZwMBhT9zEQaRBrziBaUR0fLM2yiHs12Zw_aem_L2ICVfJ5NlKidPETrJQo4A"
+  }
+}

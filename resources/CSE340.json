@@ -1,0 +1,13 @@
+{
+  "title": "CSE340",
+  "description": "No description provided.",
+  "resources": [{
+      "name": "Playlist",
+      "link": "https://www.youtube.com/playlist?app=desktop&list=PLsheiwzPKqWd_I5uRzJIDMhfYJD35WZY5",
+      "type": "link"
+    }],
+  "previous_questions": {
+    "mid": "",
+    "final": ""
+  }
+}

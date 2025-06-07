@@ -1,0 +1,20 @@
+{
+  "title": "CSE220",
+  "description": "No description provided.",
+  "resources": [
+    {
+      "name": "Drive: Course Materials",
+      "link": "https://drive.google.com/drive/folders/1ZvnnNMjz3AN4r2wJ-xM1BULIDCuADM0I",
+      "type": "folder"
+    },
+    {
+      "name": "Lecture Notes",
+      "link": "https://drive.google.com/drive/folders/1ADucedBDj_y72M8wuF9_JZ9TcBvjCuGp",
+      "type": "folder"
+    }
+  ],
+  "previous_questions": {
+    "mid": "",
+    "final": ""
+  }
+}

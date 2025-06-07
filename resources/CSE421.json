@@ -1,0 +1,13 @@
+{
+  "title": "CSE421",
+  "description": "No description provided.",
+  "resources": [{
+      "name": "Playlist",
+      "link": "https://www.youtube.com/playlist?list=PLCh3_NUqW7_J2wA2OxXP27lyFUDBKpLpw",
+      "type": "link"
+    }],
+  "previous_questions": {
+    "mid": "",
+    "final": ""
+  }
+}

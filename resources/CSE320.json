@@ -1,0 +1,18 @@
+{
+  "title": "CSE320",
+  "description": "No description provided.",
+  "resources": [{
+      "name": "Resources",
+      "link": "https://drive.google.com/drive/folders/1THwgkpvw_c-X0Zw9ZqL0SEiSToQO-0b7",
+      "type": "link"
+    },
+    {
+      "name": "Playlist",
+      "link": "https://www.youtube.com/playlist?list=PL5b6Wl2Equ1a2Xcpo3bAvAoG_Nr6J86IX",
+      "type": "link"
+    }],
+  "previous_questions": {
+    "mid": "https://drive.google.com/drive/folders/1VeJn-oTNJIDHLJuWXkxQBxgU8-zhWFEH",
+    "final": "https://drive.google.com/drive/folders/1VeJn-oTNJIDHLJuWXkxQBxgU8-zhWFEH"
+  }
+}
