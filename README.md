@@ -55,8 +55,8 @@ Follow these steps to set up and run the app on your local machine:
 
 ```bash
 # Clone the repository
-git clone https://github.com/xDhruboVai/BRACU-Gradesheet-Analyzer-CSE.git
-cd BRACU-Gradesheet-Analyzer-CSE
+git clone https://github.com/xDhruboVai/BRACU-Gradesheet-Analyzer.git
+cd BRACU-Gradesheet-Analyzer
 
 # (Optional) Create a virtual environment
 python -m venv venv
