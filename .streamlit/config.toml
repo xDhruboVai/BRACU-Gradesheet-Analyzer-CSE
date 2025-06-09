@@ -1,6 +1,28 @@
+[server]
+port = 8501
+address = "0.0.0.0"
+headless = true
+enableCORS = false
+enableXsrfProtection = false
+
+[browser]
+gatherUsageStats = false
+
 [theme]
 base="dark"
 primaryColor="#80DFFF"
 backgroundColor="#000000"
 secondaryBackgroundColor="#1A1A1A"
 textColor="#FFFFFF"
+
+[logger]
+level = "info"
+
+[client]
+caching = true
+displayEnabled = true
+
+[runner]
+magicEnabled = true
+installTracer = false
+fixMatplotlib = true

@@ -47,11 +47,31 @@ Designed with BRACU students in mind, the analyzer allows you to:
 - **Plotly** — For interactive graphs
 - **PyMuPDF** — For extracting data from transcripts
 - **Pandas** — For processing and visualization
+- **Docker** — For containerized deployment
 
 ---
 
 ## 📁 How to Run Locally
-Follow these steps to set up and run the app on your local machine:
+
+You can run the app locally using **either Docker (recommended)** or a direct Python setup.
+
+### Option 1: Using Docker (Recommended)
+
+> **Docker must be installed and configured on your machine.**
+
+```bash
+git clone https://github.com/xDhruboVai/BRACU-Gradesheet-Analyzer.git
+cd BRACU-Gradesheet-Analyzer/docker
+./run.sh start
+```
+
+Access at **http://localhost:8501**
+
+📋 **[Complete Docker Setup Guide](docker/DOCKER_LOCAL.md)** — Step-by-step instructions for Docker setup
+
+---
+
+### Option 2: Direct Python Setup
 
 ```bash
 # Clone the repository
@@ -69,4 +89,5 @@ pip install -r requirements.txt
 streamlit run app.py
 
 # The app will open at http://localhost:8501/
-#At any point if it says x: command not found, use python -m rest of the command
+# At any point if it says x: command not found, use python -m rest of the command
+```
