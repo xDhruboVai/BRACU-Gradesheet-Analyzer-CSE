@@ -8,10 +8,10 @@ import pandas as pd
 from utils_parser import (
     extract, add_course, remove_course, simulate_retake,
     cgpa_projection, cgpa_planner, cod_planner, course_node,
-    get_unlocked_courses, get_all_course_codes, load_course_resources
+    get_unlocked_courses, get_all_course_codes, load_course_resources, get_session_cod_sets
 )
 from shared_data import (
-    preq, arts_st, cst_st, core, science_st, ss_st, labs, comp_cod, tarc
+    preq, arts_st, cst_st, core, science_st, ss_st, labs, comp_cod, tarc, cs_elective
 )
 
 st.set_page_config(
@@ -52,7 +52,7 @@ strong {
 
 
 # Theme and header
-st.title("📊 BRACU Gradesheet Analyzer (CSE)")
+st.title("📊 BRACU Gradesheet Analyzer (CSE & CS)")
 st.markdown("Analyze your BRAC University Gradesheet, calculate CGPA, visualize trends and plan courses.")
 
 # Session state setup
@@ -66,8 +66,28 @@ if "name" not in st.session_state:
     st.session_state.added_courses = set()
     st.session_state.courses_done = {}
     st.session_state.semesters_done = {}
+    st.session_state.dept = "CSE"
+    
+if "prev_dept" not in st.session_state:
+    st.session_state.prev_dept = st.session_state.get("dept", "CSE")
+
 
 st.sidebar.title("Gradesheet Upload")
+
+# Department selection
+st.session_state.dept = st.sidebar.radio(
+    label="",
+    options=["CSE", "CS"],
+    horizontal=True,
+    index=0 if st.session_state.get("dept", "CSE") == "CSE" else 1,
+    key="dept_selector"
+)
+
+# Trigger rerun if selection changed
+if st.session_state.dept != st.session_state.get("prev_dept"):
+    st.session_state.prev_dept = st.session_state.dept
+    st.rerun()
+
 
 if not st.session_state.uploaded:
     pdf = st.sidebar.file_uploader("Upload your Gradesheet", type="pdf")
@@ -82,17 +102,18 @@ if not st.session_state.uploaded:
         st.session_state.courses_done = c_done
         st.session_state.semesters_done = s_done
         st.session_state.original_gpas = {c: n.gpa for c, n in c_done.items()}
-        st.success("Transcript processed.")
+        st.session_state.info_refreshed = False
+        st.rerun()
+
 else:
-    st.sidebar.write("Gradesheet uploaded! Refresh page to upload another." \
-    " You can close this sidebar.")
+    st.sidebar.write("✅ Gradesheet uploaded! Refresh the page to upload another.\n\nYou can close this sidebar by pressing the arrow on the **top right**.")
+
 
 
 # Tabs
 tab1, tab2, tab3, tab4, tab5, tab6, tab7 = st.tabs([
     "Courses & Retake", "CGPA Planner", "COD Planner", "Visual Analytics", "Unlocked Courses", "Course Resources", "Completed Course Breakdown"
 ])
-
 
 
 # Helper: calculate CGPA
@@ -127,23 +148,25 @@ with tab1:
         line-height: 1.5;
     ">
         <strong>ℹ️ Note: Read this before proceeding</strong><br><br>
-        Press the <strong>REFRESH INFO BUTTON (ON THE RIGHT)</strong> upon adding the gradesheet, adding or removing any course.<br>
-        Any change made on this page will be treated as a course addition and will affect:
+        Any change you make here — such as adding, retaking, or removing a course — will <strong>automatically</strong> update:
         <ul style="margin-top: 5px; margin-bottom: 5px;">
             <li>CGPA planner</li>
             <li>CGPA projection</li>
-            <li>Graphs</li>
+            <li>Visual analytics</li>
             <li>Unlocked courses</li>
+            <li>Completed course breakdown</li>
         </ul>
-        To remove added or retake courses, use the <strong>REMOVE COURSE</strong> section.
+        You can remove added or retaken courses using the <strong>REMOVE COURSE</strong> section below.<br><br>
+        <strong>For CS students:</strong> Please check the <strong>CS</strong> option in the sidebar  
+        <em>(press the arrow on the top left to open the sidebar)</em>.
     </div>
     """,
-    unsafe_allow_html=True,
+    unsafe_allow_html=True
 )
 
     col1, col2, col3 = st.columns([3, 3, 1])
     blur = col1.checkbox("Blur personal info")
-    refresh = col3.button("🔄 Refresh Info")
+    refresh = None
 
     if refresh:
         refresh_info()
@@ -186,8 +209,9 @@ with tab1:
                 st.session_state.original_gpas[new_code] = new_gpa
                 st.session_state.added_courses.add(new_code)
                 refresh_info()
-                st.success(f"Added {new_code} with GPA {new_gpa:.2f}")
-                st.info("ℹ️ Please press the '🔄 Refresh Info' button or the values may become incorrect.")
+                st.session_state.info_refreshed = True
+                st.rerun()
+
 
 
         # Retake course
@@ -206,8 +230,9 @@ with tab1:
                     st.session_state.original_gpas[course_to_retake] = st.session_state.courses_done[course_to_retake].gpa
                 add_course(course_to_retake, retake_gpa, st.session_state.courses_done, st.session_state.semesters_done)
                 refresh_info()
-                st.success(f"Retaken {course_to_retake} with new GPA {retake_gpa:.2f}")
-                st.info("ℹ️ Please press the '🔄 Refresh Info' button or the values may become incorrect.")
+                st.session_state.info_refreshed = True
+                st.rerun()
+
 
 
         st.markdown("---")
@@ -231,10 +256,8 @@ with tab1:
                     st.session_state.original_gpas.pop(course, None)
                     remove_course(course, st.session_state.courses_done, st.session_state.semesters_done)
             refresh_info()
-            st.success(f"Removed: {', '.join(selected_remove)}")
-            st.info("ℹ️ Please press the '🔄 Refresh Info' button or the values may become incorrect.")
-
-
+            st.session_state.info_refreshed = True
+            st.rerun()
     else:
         st.info("Upload a Gradesheet to begin.")
 
@@ -273,13 +296,14 @@ with tab2:
                 current_cgpa = round(total_points / total_credits, 2) if total_credits else 0.0
                 st.metric("Current CGPA", current_cgpa)
             else:
+                required_credits = 136 if st.session_state.dept == "CSE" else 124
                 result = cgpa_planner(
                     st.session_state.courses_done,
                     round(target_cgpa, 2),
                     semesters,
-                    courses_per_sem
+                    courses_per_sem,
+                    total_required_credits=required_credits
                 )
-
                 st.metric("Max Possible CGPA", result.get("max_cgpa", 0.0))
                 if "required_avg_gpa" in result:
                     st.metric("Required Avg GPA", result["required_avg_gpa"])
@@ -292,16 +316,19 @@ with tab2:
         st.write("Estimate your highest achievable CGPA from current progress.")
 
         if st.button("Run Max CGPA Projection"):
-            proj = cgpa_projection(st.session_state.courses_done, target_cgpa)
+            required_credits = 136 if st.session_state.dept == "CSE" else 124
+            proj = cgpa_projection(st.session_state.courses_done, target_cgpa, total_required_credits=required_credits)
             st.metric("Max Achievable CGPA", proj.get("max_cgpa", 0.0))
             if "message" in proj:
                 st.info(proj["message"])
 
 
-
 # ========== TAB 3 ==========
 with tab3:
     st.header("📚 COD Planner")
+
+    from utils_parser import get_session_cod_sets
+    comp_cod_session, arts_st_session = get_session_cod_sets(st.session_state.courses_done)
 
     if st.button("🎯 Generate COD Plan"):
         cod = cod_planner(st.session_state.courses_done)
@@ -338,7 +365,7 @@ with tab3:
 
         st.markdown("### 📚 Remaining COD Courses by Stream")
         stream_map = {
-            "Arts": arts_st,
+            "Arts": arts_st_session,
             "Social Sciences": ss_st,
             "CST": cst_st,
             "Science": science_st
@@ -354,7 +381,9 @@ with tab4:
     st.header("📊 Visual Analytics Dashboard")
 
     completed = st.session_state.total_credits
-    remaining = 136 - completed
+    required_credits = 136 if st.session_state.dept == "CSE" else 124
+    remaining = required_credits - completed
+
 
     fig_pie = go.Figure(data=[go.Pie(
         labels=["Completed", "Remaining"],
@@ -364,7 +393,7 @@ with tab4:
     )])
     fig_pie.update_traces(textinfo='label+percent')
     fig_pie.update_layout(
-        title="Credits Earned vs Remaining (out of 136)",
+        title=f"Credits Earned vs Remaining (out of {required_credits})",
         template="plotly_dark",
         height=400
     )
@@ -473,12 +502,16 @@ with tab5:
     st.header("🚀 Unlocked Courses Explorer")
 
     unlocked, unlocks_by = get_unlocked_courses(st.session_state.courses_done)
+    comp_cod_session, _ = get_session_cod_sets(st.session_state.courses_done)
 
     col1, col2 = st.columns(2)
 
+    dept = st.session_state.get("dept", "CSE")
+    core_set = core if dept == "CSE" else core - cs_elective
+
     with col1:
         st.subheader("✅ Unlocked Core Courses")
-        core_unlocked = sorted([c for c in unlocked if c in core])
+        core_unlocked = sorted([c for c in unlocked if c in core_set])
         for course in core_unlocked:
             unlocked_list = unlocks_by.get(course, [])
             st.write(f"• {course}  ⇒  unlocks: {', '.join(unlocked_list) if unlocked_list else 'None'}")
@@ -488,7 +521,7 @@ with tab5:
 
         comp_cod_unlocked = sorted([
             c for c in unlocked
-            if c in comp_cod and c not in st.session_state.courses_done
+            if c in comp_cod_session and c not in st.session_state.courses_done
         ])
         if comp_cod_unlocked:
             st.write("The following compulsory COD courses are now unlocked:")
@@ -500,6 +533,7 @@ with tab5:
 
     st.markdown("---")
     st.markdown("In order to check which COD course you should take, please check the COD Planner")
+
 
 RESOURCE_DIR = "resources"
 from utils_parser import get_all_course_codes, load_course_resources
@@ -554,30 +588,32 @@ with tab7:
     st.header("Completed Courses Breakdown")
 
     courses_done = st.session_state.courses_done
+    comp_cod_session, arts_st_session = get_session_cod_sets(courses_done)
 
-    # Organize courses into categories
     core_data = []
     comp_cod_data = []
     elective_data = []
     cod_data = []
 
+    dept = st.session_state.get("dept", "CSE")
+    core_set = core if dept == "CSE" else core - cs_elective
+
     for code in sorted(courses_done.keys()):
-        if code in core:
+        if code in core_set:
             core_data.append({"Course Code": code})
-        elif code in comp_cod:
+        elif code in comp_cod_session:
             comp_cod_data.append({"Course Code": code})
-        elif code.startswith("CSE") and code not in core and code not in comp_cod:
+        elif code.startswith("CSE") and code not in core_set and code not in comp_cod_session:
             elective_data.append({"Course Code": code})
         elif code in cst_st:
             cod_data.append({"Course Code": code, "Stream": "CST"})
-        elif code in arts_st:
+        elif code in arts_st_session:
             cod_data.append({"Course Code": code, "Stream": "Arts"})
         elif code in ss_st:
             cod_data.append({"Course Code": code, "Stream": "Social Sciences"})
         elif code in science_st:
             cod_data.append({"Course Code": code, "Stream": "Science"})
 
-    # Layout with 4 columns
     col1, col2, col3, col4 = st.columns(4)
 
     with col1:
@@ -615,7 +651,6 @@ with tab7:
             st.dataframe(df_elec, use_container_width=True, height=300)
         else:
             st.info("No elective courses completed.")
-
 
 import datetime
 import random

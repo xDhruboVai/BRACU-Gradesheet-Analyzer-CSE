@@ -1,6 +1,7 @@
 import os
 import json
 import fitz
+from streamlit.runtime.scriptrunner import get_script_run_ctx
 from shared_data import preq, cst_st, arts_st, ss_st, science_st, to_remove, grades, core, comp_cod, tarc
 
 class course_node:
@@ -149,8 +150,7 @@ def remove_course(course_code, courses_done, semesters_done):
                 del semesters_done[semester]
             return
 
-def cgpa_projection(courses_done, target_cgpa=None):
-    total_required_credits = 136
+def cgpa_projection(courses_done, target_cgpa=None, total_required_credits=136):
     earned_credits = sum(node.credit for node in courses_done.values())
     earned_points = sum(node.gpa * node.credit for node in courses_done.values())
 
@@ -190,8 +190,7 @@ def cgpa_projection(courses_done, target_cgpa=None):
             )
     return result
 
-def cgpa_planner(courses_done, target_cgpa=None, semesters=0, courses_per_sem=0):
-    total_required_credits = 136
+def cgpa_planner(courses_done, target_cgpa=None, semesters=0, courses_per_sem=0, total_required_credits=136):
     total_credits_done = sum(course.credit for course in courses_done.values())
     quality_points_done = sum(course.gpa * course.credit for course in courses_done.values())
 
@@ -238,8 +237,12 @@ def cgpa_planner(courses_done, target_cgpa=None, semesters=0, courses_per_sem=0)
             )
     return result
 
-
 def cod_planner(courses_done):
+    from shared_data import cst_st, ss_st, science_st
+    from utils_parser import get_session_cod_sets
+
+    comp_cod_session, arts_st_session = get_session_cod_sets(courses_done)
+
     maximum = 5
     cst = arts = ss = science = 0
     taken = set()
@@ -248,7 +251,7 @@ def cod_planner(courses_done):
         if course in cst_st:
             cst += 1
             taken.add(course)
-        elif course in arts_st:
+        elif course in arts_st_session:
             arts += 1
             taken.add(course)
         elif course in science_st:
@@ -279,7 +282,7 @@ def cod_planner(courses_done):
     plan = []
 
     if arts == 0:
-        for course in arts_st:
+        for course in arts_st_session:
             if course not in taken:
                 plan.append(course)
                 taken.add(course)
@@ -310,7 +313,7 @@ def cod_planner(courses_done):
                 remaining -= 1
                 break
 
-    combined_pool = list(arts_st | ss_st | science_st)
+    combined_pool = list(arts_st_session | ss_st | science_st)
     for course in combined_pool:
         if remaining == 0:
             break
@@ -383,3 +386,12 @@ def load_course_resources(course_code, resource_dir="resources"):
         with open(file_path, "r") as f:
             return json.load(f)
     return None
+
+def get_session_cod_sets(courses_done):
+    comp_cod_session = set(comp_cod)
+    arts_st_session = set(arts_st)
+    if "ENG101" not in courses_done and "ENG102" in courses_done:
+        comp_cod_session.add("ENG103")
+        if "ENG103" in arts_st_session:
+            arts_st_session.remove("ENG103")
+    return comp_cod_session, arts_st_session
